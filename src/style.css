@@ -1,0 +1,27 @@
+#root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#board {
+  /* border: 2px solid #ccc; */
+  width: 400px;
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  height: 400px;
+}
+
+.square {
+  width: 33%;
+  border: 2px solid #ccc;
+  height: 33%;
+  box-sizing: border-box;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 100px;
+  font-weight: bold;
+}
