@@ -25,3 +25,7 @@
   font-size: 100px;
   font-weight: bold;
 }
+
+#restart {
+  display: none;
+}
