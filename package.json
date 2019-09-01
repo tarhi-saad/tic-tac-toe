@@ -1,0 +1,47 @@
+{
+  "name": "tic-tac-toe",
+  "version": "1.0.0",
+  "description": "A Tic Tac Toe game you can play in your browser!",
+  "private": true,
+  "scripts": {
+    "start": "webpack-dev-server --open --config ./webpack/webpack.dev.js",
+    "build": "webpack --config ./webpack/webpack.prod.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tarhi-saad/tic-tac-toe.git"
+  },
+  "keywords": [
+    "tic-tac-toe",
+    "vanilla JS",
+    "Factory Functions",
+    "The Module Pattern",
+    "Composition Over Inheritence"
+  ],
+  "author": "Saad Tarhi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tarhi-saad/tic-tac-toe/issues"
+  },
+  "homepage": "https://github.com/tarhi-saad/tic-tac-toe#readme",
+  "devDependencies": {
+    "@babel/core": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "babel-loader": "^8.0.6",
+    "clean-webpack-plugin": "^3.0.0",
+    "css-loader": "^3.2.0",
+    "eslint": "^6.2.2",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.18.2",
+    "file-loader": "^4.2.0",
+    "html-loader": "^0.5.5",
+    "html-webpack-plugin": "^3.2.0",
+    "mini-css-extract-plugin": "^0.8.0",
+    "optimize-css-assets-webpack-plugin": "^5.0.3",
+    "terser-webpack-plugin": "^1.4.1",
+    "webpack": "^4.39.3",
+    "webpack-cli": "^3.3.7",
+    "webpack-dev-server": "^3.8.0",
+    "webpack-merge": "^4.2.2"
+  }
+}
