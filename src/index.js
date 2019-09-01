@@ -56,6 +56,11 @@ board.onclick = (e) => {
     return;
   }
 
+  if (!Object.values(boardState).some((value) => !value)) {
+    gameStatus.innerHTML = 'It\' a tie!';
+    return;
+  }
+
   nextIsX = !nextIsX;
   gameStatus.innerHTML = nextIsX ? 'Next player: X' : 'Next player: O';
 
@@ -73,5 +78,4 @@ restart.onclick = () => {
   });
   gameStatus.innerHTML = 'Next player: X';
   nextIsX = true;
-  console.log(boardState);
 };
