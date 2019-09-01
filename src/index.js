@@ -67,6 +67,11 @@ board.onclick = (e) => {
   if (!restart.style.display) restart.style.display = 'block';
 };
 
+const reset = () => {
+  gameStatus.innerHTML = 'Next player: X';
+  nextIsX = true;
+};
+
 restart.onclick = () => {
   Object.keys(boardState).map((key) => {
     boardState[key] = '';
@@ -76,6 +81,6 @@ restart.onclick = () => {
     square.innerHTML = '';
     return square;
   });
-  gameStatus.innerHTML = 'Next player: X';
-  nextIsX = true;
+
+  reset();
 };
