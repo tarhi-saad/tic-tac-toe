@@ -13,6 +13,7 @@ module.exports = {
     sourceType: 'module',
   },
   rules: {
+    'no-param-reassign': [2, { props: false }],
     'import/no-extraneous-dependencies': [
       'error',
       { devDependencies: true, optionalDependencies: true, peerDependencies: false },
