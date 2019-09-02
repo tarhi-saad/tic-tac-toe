@@ -1,62 +1,59 @@
 /**
- * We need to declare a winner:
- * We must know the state of the board in every turn
- * So, the state of every square must be saved in the board
- * we must provide a 'button' to 'start the game' and empty the board
- * how/where can we save the board state? Array? Object? Array of objects?
- * Maybe we need to set data attributes for the squares...
- * Now we can detect which of the squares gets clicked and save it accordingly
+ * * We need to organize our code:
+ * Factory & Modules
+ * ? How to determine whene we need one of them?
+ * ==============================
+ * * The status of my code:
+ * - 5 Global variables
+ * - 2 helper functions
+ * - 2 Global event handlers
+ * ==============================
+ * * Content of the code:
+ * ...
+ * ==============================
+ * * Let's define a module. We want to return an object which contain a set of behaviors & props
+ * ? what sort of objects can extract from our app?
+ * an object is a special type thats represent a real world variable
+ * It has properties and it can do things, like a "car"
+ * ? do we have this kind of object here?
+ * =============================
+ * ? what can do things and/or have properties in this code?
+ * - board: "boardState", "isWinner()", "restart()"
+ * - square: "innerHTML", is clearly a child of "board"
+ * ? why do we need to manage players?
+ * The idea is to have "gameBoard" & "displayController" as a Module, and "players" as a Factory
+ * * In "react" we think components:
+ * - every piece of UI is its own component (Class or function-stateless)
  */
+
+import gameBoard from './modules/gameboard';
 import './style.css';
 
-const board = document.getElementById('board');
 const gameStatus = document.getElementById('game-status');
 const restart = document.getElementById('restart');
+const root = document.getElementById('root');
 
 let nextIsX = true;
-const boardState = {
-  1: '',
-  2: '',
-  3: '',
-  4: '',
-  5: '',
-  6: '',
-  7: '',
-  8: '',
-  9: '',
-};
 
-const isWinner = (obj) => {
-  const possibilities = [
-    [1, 2, 3],
-    [4, 5, 6],
-    [7, 8, 9],
-    [1, 4, 7],
-    [2, 5, 8],
-    [3, 6, 9],
-    [1, 5, 9],
-    [3, 5, 7],
-  ];
-
-  return possibilities.some((arr) => obj[arr[0]] && obj[arr[0]]
-  === obj[arr[1]] && obj[arr[0]]
-  === obj[arr[2]]);
-};
+gameBoard.render(root);
+const board = document.getElementById('board');
 
 board.onclick = (e) => {
   const square = e.target;
 
-  if (square.className !== 'square' || square.innerHTML || isWinner(boardState)) return;
+  if (square.className !== 'square' || square.innerHTML || gameBoard.isWinner()) return;
 
-  square.innerHTML = nextIsX ? 'X' : 'O';
-  boardState[square.dataset.index] = square.innerHTML;
+  const squareIndex = square.dataset.index;
+  const value = nextIsX ? 'X' : 'O';
 
-  if (isWinner(boardState)) {
+  gameBoard.add(squareIndex, value);
+
+  if (gameBoard.isWinner()) {
     gameStatus.innerHTML = `Congratulation to player: ${square.innerHTML}`;
     return;
   }
 
-  if (!Object.values(boardState).some((value) => !value)) {
+  if (gameBoard.get().indexOf(null) === -1) {
     gameStatus.innerHTML = 'It\' a tie!';
     return;
   }
@@ -73,14 +70,6 @@ const reset = () => {
 };
 
 restart.onclick = () => {
-  Object.keys(boardState).map((key) => {
-    boardState[key] = '';
-    return key;
-  });
-  Array.from(board.querySelectorAll('.square')).map((square) => {
-    square.innerHTML = '';
-    return square;
-  });
-
+  gameBoard.reset();
   reset();
 };
