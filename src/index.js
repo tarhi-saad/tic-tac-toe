@@ -24,17 +24,37 @@
  * The idea is to have "gameBoard" & "displayController" as a Module, and "players" as a Factory
  * * In "react" we think components:
  * - every piece of UI is its own component (Class or function-stateless)
+ * ! Last changes: Create "gameBoard" Module
+ * TODO: Create "displayController" Module & "players" Factory Function
+ * ? what is the flow of the game?
+ * ============================
+ * * Features:
+ * - [X]gameboard (gameBoard)
+ * - [X]players
+ * - [ ]Control the flow of the game
+ * - [X]Render "gameboard" (gameBoard)
+ * - [X]Add marks on the board (gameBoard)
+ * - [X]Check "Game over"
+ * - [ ]Put players names
+ * - [ ]Start
+ * - [X]Restart (gameBoard)
+ * - [X]Display state of the game (winner, turn...) (gameBoard)
+ * - [ ]Choose playing vs AI or human
  */
 
 import gameBoard from './modules/gameboard';
+import players from './modules/players';
 import './style.css';
 
-const gameStatus = document.getElementById('game-status');
 const restart = document.getElementById('restart');
 const root = document.getElementById('root');
 
-let nextIsX = true;
+const displayController = () => {
 
+};
+
+players.setNames('Saad', 'David');
+players.render(root);
 gameBoard.render(root);
 const board = document.getElementById('board');
 
@@ -44,32 +64,26 @@ board.onclick = (e) => {
   if (square.className !== 'square' || square.innerHTML || gameBoard.isWinner()) return;
 
   const squareIndex = square.dataset.index;
-  const value = nextIsX ? 'X' : 'O';
+  const value = players.mark();
 
   gameBoard.add(squareIndex, value);
 
   if (gameBoard.isWinner()) {
-    gameStatus.innerHTML = `Congratulation to player: ${square.innerHTML}`;
+    players.displayState('win');
     return;
   }
 
   if (gameBoard.get().indexOf(null) === -1) {
-    gameStatus.innerHTML = 'It\' a tie!';
+    players.displayState('tie');
     return;
   }
 
-  nextIsX = !nextIsX;
-  gameStatus.innerHTML = nextIsX ? 'Next player: X' : 'Next player: O';
+  players.switchTurns();
 
   if (!restart.style.display) restart.style.display = 'block';
 };
 
-const reset = () => {
-  gameStatus.innerHTML = 'Next player: X';
-  nextIsX = true;
-};
-
 restart.onclick = () => {
   gameBoard.reset();
-  reset();
+  players.reset();
 };

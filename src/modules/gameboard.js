@@ -7,12 +7,16 @@ const gameBoard = (function gameBoard() {
     board.querySelectorAll('li')[index].innerHTML = value;
   };
 
-  const render = (element) => {
+  /**
+   * Render the "board"
+   * @param {HTMLElement} root The root HTML element where our "board"  will reside
+   */
+  const render = (root) => {
     board.id = 'board';
     gameboard.forEach(
       (square, i) => board.insertAdjacentHTML('beforeEnd', `<li class="square" data-index=${i}></li>`),
     );
-    element.append(board);
+    root.append(board);
   };
 
   const reset = () => {
