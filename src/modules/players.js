@@ -24,11 +24,6 @@ const players = (function players() {
 
   const mark = () => (nextIsX ? 'X' : 'O');
 
-  const reset = () => {
-    nextIsX = true;
-    container.innerHTML = `Next player: ${first.name}`;
-  };
-
   const displayState = (state) => {
     container.innerHTML = state;
 
@@ -47,6 +42,11 @@ const players = (function players() {
     }
   };
 
+  const reset = () => {
+    nextIsX = true;
+    displayState('first');
+  };
+
   const render = (root) => {
     container.id = 'game-status';
     displayState('first');
@@ -55,7 +55,6 @@ const players = (function players() {
 
   return {
     setNames,
-    next,
     switchTurns,
     mark,
     render,

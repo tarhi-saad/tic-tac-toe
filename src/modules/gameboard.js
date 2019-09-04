@@ -45,12 +45,15 @@ const gameBoard = (function gameBoard() {
 
   const get = () => gameboard;
 
+  const getHTMLBoard = () => board;
+
   return {
     add,
     render,
     reset,
     isWinner,
     get,
+    getHTMLBoard,
   };
 }());
 

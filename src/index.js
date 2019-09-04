@@ -44,46 +44,13 @@
 
 import gameBoard from './modules/gameboard';
 import players from './modules/players';
+import displayController from './modules/displayController';
 import './style.css';
 
-const restart = document.getElementById('restart');
 const root = document.getElementById('root');
-
-const displayController = () => {
-
-};
 
 players.setNames('Saad', 'David');
 players.render(root);
 gameBoard.render(root);
-const board = document.getElementById('board');
 
-board.onclick = (e) => {
-  const square = e.target;
-
-  if (square.className !== 'square' || square.innerHTML || gameBoard.isWinner()) return;
-
-  const squareIndex = square.dataset.index;
-  const value = players.mark();
-
-  gameBoard.add(squareIndex, value);
-
-  if (gameBoard.isWinner()) {
-    players.displayState('win');
-    return;
-  }
-
-  if (gameBoard.get().indexOf(null) === -1) {
-    players.displayState('tie');
-    return;
-  }
-
-  players.switchTurns();
-
-  if (!restart.style.display) restart.style.display = 'block';
-};
-
-restart.onclick = () => {
-  gameBoard.reset();
-  players.reset();
-};
+displayController.init(gameBoard, players, root);
