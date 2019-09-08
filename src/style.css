@@ -5,27 +5,80 @@
 }
 
 #board {
-  /* border: 2px solid #ccc; */
-  width: 400px;
+  padding: 0;
+  width: 300px;
   display: flex;
   align-items: flex-start;
   flex-wrap: wrap;
-  height: 400px;
+  height: 300px;
 }
 
 .square {
-  width: 33%;
+  width: 100px;
   border: 2px solid #ccc;
-  height: 33%;
+  height: 100px;
   box-sizing: border-box;
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 100px;
+  font-size: 60px;
   font-weight: bold;
+  user-select: none;
 }
 
 #restart {
   display: none;
+}
+
+/**
+* SVG animation
+*/
+.svg-x-mark {
+  width: 90px;
+  height: auto;
+  position: absolute;
+  opacity: 0;
+}
+
+.path-x-1 {
+  stroke: #fff;
+  stroke-dasharray: 73;
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 0.3s;
+}
+
+.svg-x-mark:hover .path-x-1 {
+  stroke-dashoffset: 73;
+}
+
+.path-x-2 {
+  stroke: #fff;
+  stroke-dasharray: 67;
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 0.3s 0.3s;
+}
+
+.svg-x-mark:hover .path-x-2 {
+  /* stroke-dashoffset: 67; */
+}
+
+/* O mark */
+.svg-o-mark {
+  width: 90px;
+  height: auto;
+  position: absolute;
+  opacity: 0;
+}
+
+.path-o-mark {
+  stroke: #fff;
+  stroke-dasharray: 173;
+  stroke-dashoffset: 0;
+  /* stroke-linecap: round; */
+  transition: stroke-dashoffset 0.3s;
+}
+
+.svg-o-mark:hover .path-o-mark {
+  /* stroke-dashoffset: 173; */
 }

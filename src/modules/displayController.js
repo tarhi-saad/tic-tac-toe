@@ -2,12 +2,12 @@ const displayController = (function displayController() {
   const restart = document.createElement('button');
 
   const gameFlow = ({ target }, gameBoard, players, restartButton) => {
-    if (target.className !== 'square'
-      || target.innerHTML
-      || gameBoard.isWinner()) return;
-
-    const squareIndex = target.dataset.index;
+    const squareIndex = target.closest('.square').dataset.index;
     const value = players.mark();
+
+    if (!target.closest('.square')
+      || gameBoard.get()[squareIndex]
+      || gameBoard.isWinner()) return;
 
     gameBoard.add(squareIndex, value);
 
@@ -27,6 +27,10 @@ const displayController = (function displayController() {
   };
 
   const init = (gameBoard, players, root) => {
+    players.setNames('Saad', 'David');
+    players.render(root);
+    gameBoard.render(root);
+
     restart.id = 'restart';
     restart.innerHTML = 'Restart';
     root.append(restart);

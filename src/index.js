@@ -24,14 +24,12 @@
  * The idea is to have "gameBoard" & "displayController" as a Module, and "players" as a Factory
  * * In "react" we think components:
  * - every piece of UI is its own component (Class or function-stateless)
- * ! Last changes: Create "gameBoard" Module
- * TODO: Create "displayController" Module & "players" Factory Function
  * ? what is the flow of the game?
  * ============================
  * * Features:
  * - [X]gameboard (gameBoard)
  * - [X]players
- * - [ ]Control the flow of the game
+ * - [X]Control the flow of the game
  * - [X]Render "gameboard" (gameBoard)
  * - [X]Add marks on the board (gameBoard)
  * - [X]Check "Game over"
@@ -40,6 +38,12 @@
  * - [X]Restart (gameBoard)
  * - [X]Display state of the game (winner, turn...) (gameBoard)
  * - [ ]Choose playing vs AI or human
+ * =============================
+ * ! Redesign our game in "svg" or "canvas"
+ * ! Animate
+ * ! Use Sass
+ * TODO: Replace 'X' & 'O' letters by their SVG conter-part
+ * TODO: You should change the system in 'players' & 'displayController' Modules
  */
 
 import gameBoard from './modules/gameboard';
@@ -48,9 +52,5 @@ import displayController from './modules/displayController';
 import './style.css';
 
 const root = document.getElementById('root');
-
-players.setNames('Saad', 'David');
-players.render(root);
-gameBoard.render(root);
 
 displayController.init(gameBoard, players, root);

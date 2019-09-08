@@ -1,10 +1,21 @@
+import xMark from '../images/x-mark.svg';
+import oMark from '../images/o-mark.svg';
+
 const gameBoard = (function gameBoard() {
   const gameboard = Array(9).fill(null);
   const board = document.createElement('ul');
 
   const add = (index, value) => {
     gameboard[index] = value;
-    board.querySelectorAll('li')[index].innerHTML = value;
+
+    if (value === 'X') {
+      board.querySelectorAll('li')[index].querySelector('.svg-x-mark').style.opacity = 1;
+      board.querySelectorAll('li')[index].querySelector('.svg-x-mark .path-x-1').style.strokeDashoffset = 73;
+      board.querySelectorAll('li')[index].querySelector('.svg-x-mark .path-x-2').style.strokeDashoffset = 67;
+    } else {
+      board.querySelectorAll('li')[index].querySelector('.svg-o-mark').style.opacity = 1;
+      board.querySelectorAll('li')[index].querySelector('.svg-o-mark .path-o-mark').style.strokeDashoffset = 173;
+    }
   };
 
   /**
@@ -14,7 +25,7 @@ const gameBoard = (function gameBoard() {
   const render = (root) => {
     board.id = 'board';
     gameboard.forEach(
-      (square, i) => board.insertAdjacentHTML('beforeEnd', `<li class="square" data-index=${i}></li>`),
+      (square, i) => board.insertAdjacentHTML('beforeEnd', `<li class="square" data-index=${i}>${xMark}${oMark}</li>`),
     );
     root.append(board);
   };
@@ -22,7 +33,11 @@ const gameBoard = (function gameBoard() {
   const reset = () => {
     gameboard.fill(null);
     board.querySelectorAll('li').forEach((li) => {
-      li.innerHTML = '';
+      li.querySelector('.svg-x-mark').style.opacity = 0;
+      li.querySelector('.svg-x-mark .path-x-1').style.strokeDashoffset = 0;
+      li.querySelector('.svg-x-mark .path-x-2').style.strokeDashoffset = 0;
+      li.querySelector('.svg-o-mark').style.opacity = 0;
+      li.querySelector('.svg-o-mark .path-o-mark').style.strokeDashoffset = 0;
     });
   };
 
