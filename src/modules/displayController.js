@@ -2,10 +2,11 @@ const displayController = (function displayController() {
   const restart = document.createElement('button');
 
   const gameFlow = ({ target }, gameBoard, players, restartButton) => {
-    const squareIndex = target.closest('.square').dataset.index;
+    const square = target.closest('.square');
+    const squareIndex = square.dataset.index;
     const value = players.mark();
 
-    if (!target.closest('.square')
+    if (!square
       || gameBoard.get()[squareIndex]
       || gameBoard.isWinner()) return;
 
