@@ -5,7 +5,7 @@ import boardSVG from '../images/board.svg';
 const gameBoard = (function gameBoard() {
   const gameboard = Array(9).fill(null);
   const board = document.createElement('ul');
-  let rootElement = null;
+  const boardWrapper = document.createElement('div');
 
   const add = (index, value) => {
     gameboard[index] = value;
@@ -21,13 +21,13 @@ const gameBoard = (function gameBoard() {
     }
   };
 
-  const renderSvgBoard = (root) => {
-    root.insertAdjacentHTML('afterBegin', boardSVG);
-    root.querySelector('#svg-board').style.opacity = 1;
-    root.querySelector('#svg-board #svg-board-line1').style.strokeDashoffset = getComputedStyle(root.querySelector('#svg-board #svg-board-line1')).strokeDasharray;
-    root.querySelector('#svg-board #svg-board-line2').style.strokeDashoffset = getComputedStyle(root.querySelector('#svg-board #svg-board-line2')).strokeDasharray;
-    root.querySelector('#svg-board #svg-board-line3').style.strokeDashoffset = getComputedStyle(root.querySelector('#svg-board #svg-board-line3')).strokeDasharray;
-    root.querySelector('#svg-board #svg-board-line4').style.strokeDashoffset = getComputedStyle(root.querySelector('#svg-board #svg-board-line4')).strokeDasharray;
+  const renderSvgBoard = () => {
+    boardWrapper.insertAdjacentHTML('afterBegin', boardSVG);
+    boardWrapper.querySelector('#svg-board').style.opacity = 1;
+    boardWrapper.querySelector('#svg-board #svg-board-line1').style.strokeDashoffset = getComputedStyle(boardWrapper.querySelector('#svg-board #svg-board-line1')).strokeDasharray;
+    boardWrapper.querySelector('#svg-board #svg-board-line2').style.strokeDashoffset = getComputedStyle(boardWrapper.querySelector('#svg-board #svg-board-line2')).strokeDasharray;
+    boardWrapper.querySelector('#svg-board #svg-board-line3').style.strokeDashoffset = getComputedStyle(boardWrapper.querySelector('#svg-board #svg-board-line3')).strokeDasharray;
+    boardWrapper.querySelector('#svg-board #svg-board-line4').style.strokeDashoffset = getComputedStyle(boardWrapper.querySelector('#svg-board #svg-board-line4')).strokeDasharray;
   };
 
   /**
@@ -35,13 +35,14 @@ const gameBoard = (function gameBoard() {
    * @param {HTMLElement} root The root HTML element where our "board"  will reside
    */
   const render = (root) => {
-    rootElement = root;
     board.id = 'board';
+    boardWrapper.id = 'board-wrapper';
     gameboard.forEach(
       (square, i) => board.insertAdjacentHTML('beforeEnd', `<li class="square" data-index=${i}>${xMark}${oMark}</li>`),
     );
-    root.append(board);
-    renderSvgBoard(rootElement);
+    boardWrapper.append(board);
+    root.append(boardWrapper);
+    renderSvgBoard();
   };
 
   const reset = () => {
@@ -54,7 +55,7 @@ const gameBoard = (function gameBoard() {
       li.querySelector('.svg-o-mark .path-o-mark').style.strokeDashoffset = 0;
       // board svg
       document.getElementById('svg-board').remove();
-      renderSvgBoard(rootElement);
+      renderSvgBoard();
     });
   };
 

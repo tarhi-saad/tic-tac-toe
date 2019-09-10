@@ -34,6 +34,7 @@ const displayController = (function displayController() {
 
     restart.id = 'restart';
     restart.innerHTML = 'Restart';
+    restart.classList.add('btn', 'aqua-gradient');
     root.append(restart);
 
     gameBoard.getHTMLBoard().addEventListener('click', (e) => {

@@ -1,16 +1,85 @@
+@font-face {
+  font-family: 'LuckiestGuy';
+  src: url('./fonts/LuckiestGuy-Regular.ttf') format('woff2');
+  /* font-weight: 600; */
+  font-style: normal;
+}
+
+body {
+  /* background: #4992d3; */
+  background: linear-gradient(40deg, #45cafc, #303f9f);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  font-family: LuckiestGuy, Roboto, sans-serif;
+  font-size: 24px;
+}
+
+h1 {
+  position: absolute;
+  left: 20px;
+  top: 10px;
+}
+
+button#restart {
+  font-size: 1em;
+}
+
 #root {
   display: flex;
   flex-direction: column;
   align-items: center;
+  background: #fff;
+  max-width: 960px;
+  margin: 40px auto 0;
+  padding: 80px 0 15px;
+  position: relative;
+}
+
+@media (max-width: 980px) {
+  #root {
+    margin: 40px 20px 0;
+  }
+}
+
+#root,
+#root:before,
+#root:after {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.1), 1px 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+#root:before,
+#root:after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  transform: rotateZ(2.5deg);
+  z-index: -1;
+}
+
+#root:after {
+  transform: rotateZ(-2.5deg);
+}
+
+#board-wrapper {
+  height: 300px;
+  width: 300px;
+  position: relative;
+  margin: 30px 0;
 }
 
 #board {
   padding: 0;
-  width: 300px;
+  width: 100%;
+  height: auto;
   display: flex;
   align-items: flex-start;
   flex-wrap: wrap;
-  height: 300px;
+  margin: 0;
 }
 
 .square {
@@ -89,12 +158,11 @@
 */
 
 #svg-board {
-  width: 300px;
-  height: 300px;
+  width: 100%;
+  height: 100%;
   position: absolute;
-  top: 109px;
-  left: 50%;
-  margin-left: -155px;
+  top: -4px;
+  left: -5px;
   opacity: 0;
   transition: opacity 0.15s;
 }

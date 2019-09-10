@@ -30,12 +30,18 @@ const players = (function players() {
     switch (state) {
       case 'first':
         container.innerHTML = `Next player: ${first.name}`;
+        container.className = '';
+        container.classList.add('alert', 'alert-info');
         break;
       case 'win':
         container.innerHTML = `Congratulation to player: ${next()}`;
+        container.classList.add('alert-primary');
+        container.classList.remove('alert-info');
         break;
       case 'tie':
         container.innerHTML = 'It\' a tie!';
+        container.classList.add('alert-warning');
+        container.classList.remove('alert-info');
         break;
       default:
         container.innerHTML = `Next player: ${next()}`;
@@ -49,6 +55,8 @@ const players = (function players() {
 
   const render = (root) => {
     container.id = 'game-status';
+    container.classList.add('alert', 'alert-info');
+    container.role = 'alert';
     displayState('first');
     root.append(container);
   };
