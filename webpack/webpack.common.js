@@ -2,6 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const webpack = require('webpack');
 
 const devMode = process.env.NODE_ENV !== 'production';
 
@@ -16,6 +17,13 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: devMode ? '[name].css' : '[name].[hash].css',
       chunkFilename: devMode ? '[id].css' : '[id].[hash].css',
+    }),
+    new webpack.ProvidePlugin({
+      $: 'mdbootstrap/js/jquery-3.4.1.min',
+      jQuery: 'mdbootstrap/js/jquery-3.4.1.min',
+      'window.$': 'mdbootstrap/js/jquery-3.4.1.min',
+      'window.jQuery': 'mdbootstrap/js/jquery-3.4.1.min',
+      // Waves: 'mdbootstrap/js/modules/waves',
     }),
   ],
   output: {
@@ -47,6 +55,12 @@ module.exports = {
       {
         test: /\.svg$/,
         loader: 'svg-inline-loader',
+      },
+      {
+        test: /\.(woff|woff2|eot|ttf|otf)$/,
+        use: [
+          'file-loader',
+        ],
       },
       {
         test: /\.js$/,
