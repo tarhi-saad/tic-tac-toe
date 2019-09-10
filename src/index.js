@@ -42,15 +42,19 @@
  * ! Redesign our game in "svg" or "canvas"
  * ! Animate
  * ! Use Sass
- * TODO: Replace 'X' & 'O' letters by their SVG conter-part
- * TODO: You should change the system in 'players' & 'displayController' Modules
+ * TODO: X & O marks are successfully implemented. Now, let's redesign the board...
  */
 
+import bsCustomFileInput from 'mdbootstrap/js/modules/bs-custom-file-input';
+import 'mdbootstrap';
+import 'mdbootstrap/css/bootstrap.min.css';
+import 'mdbootstrap/css/mdb.min.css';
 import gameBoard from './modules/gameboard';
 import players from './modules/players';
 import displayController from './modules/displayController';
 import './style.css';
 
 const root = document.getElementById('root');
+window.bsCustomFileInput = bsCustomFileInput;
 
 displayController.init(gameBoard, players, root);
