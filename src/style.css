@@ -192,3 +192,63 @@ button#restart {
   stroke-dasharray: 96;
   transition: stroke-dashoffset 0.1s ease-in-out;
 }
+
+/**
+* Home button
+*/
+
+#home-button {
+  position: absolute;
+  top: 51px;
+  left: 26px;
+  border-radius: 50%;
+  padding: 0;
+  width: 61.1px;
+  height: 61.1px;
+  box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
+}
+
+#home-button:hover {
+  box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+#home-button i {
+  font-size: 1.625rem;
+  line-height: 61.1px;
+}
+
+#game-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/**
+* Home
+*/
+
+#game-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#game-form .md-form .prefix {
+  top: 0.25rem;
+  /* color: #7575758a; */
+}
+
+#game-form .md-form label {
+  color: #7575758a;
+}
+
+button#play {
+  font-size: 1.5rem;
+}
+
+button#play i {
+  position: relative;
+  top: 2px;
+  left: 4px;
+  margin-right: 4px;
+}

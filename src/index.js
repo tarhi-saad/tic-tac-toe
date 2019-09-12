@@ -39,22 +39,37 @@
  * - [X]Display state of the game (winner, turn...) (gameBoard)
  * - [ ]Choose playing vs AI or human
  * =============================
- * ! Redesign our game in "svg" or "canvas"
  * ! Animate
  * ! Use Sass
- * TODO: X & O marks are successfully implemented. Now, let's redesign the board...
+ * TODO: Improve UX
+ * ? Score feature? This feature can wait...
+ * * Save and display the score (Display the names separatly to add the scrore to each one of them)
+ * * To add the score you have to add the 'choose your mark' feature to give the players a fair play
+ * * Add 'ties' count in the middle
+ * * Save data using 'local storage' (score & names)
+ * * Add 'reset score' feature & 'change name' feature
+ * =================================================
+ * TODO: Add 'names' feature
+ * * Let players enter their names at the start of the game
+ * * Add button 'Start'
+ * * Add 'name fields'
+ * ? Let's develop:
+ * - Render 'inputs' & 'Start button' (before rendering the game board)
+ * - Click 'Start' => Remove the first view, then render the 'GameBoard' (with the given names)
+ * - Add 'Home button' in the 'GameBoard' view to => Remove this view, then render the 'Home' view
+ * - 
+ * ==================================================
+ * * Implement the 'AI' feature
+ * * Add an option to choose between 'Ai' and 'Human'
+ * * Add Sound effects!
+ * TODO: Animation & effects
+ * * Win effect: add straight line show the wining combination
+ * * Different colors for 'X' & 'O', and also the 'Board'
  */
 
-import bsCustomFileInput from 'mdbootstrap/js/modules/bs-custom-file-input';
-import 'mdbootstrap';
-import 'mdbootstrap/css/bootstrap.min.css';
-import 'mdbootstrap/css/mdb.min.css';
-import gameBoard from './modules/gameboard';
-import players from './modules/players';
 import displayController from './modules/displayController';
 import './style.css';
 
 const root = document.getElementById('root');
-window.bsCustomFileInput = bsCustomFileInput;
 
-displayController.init(gameBoard, players, root);
+displayController.init(root);

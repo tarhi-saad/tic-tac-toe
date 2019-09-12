@@ -1,7 +1,20 @@
-const displayController = (function displayController() {
-  const restart = document.createElement('button');
+import bsCustomFileInput from 'mdbootstrap/js/modules/bs-custom-file-input';
+import 'mdbootstrap';
+import 'mdbootstrap/css/bootstrap.min.css';
+import 'mdbootstrap/css/mdb.min.css';
+import '@fortawesome/fontawesome-free/css/all.min.css';
+import homeView from './homeView';
+import gameBoard from './gameboard';
+import players from './players';
 
-  const gameFlow = ({ target }, gameBoard, players, restartButton) => {
+window.bsCustomFileInput = bsCustomFileInput;
+
+const displayController = (function displayController() {
+  const gameWrapper = document.createElement('div');
+  const restart = document.createElement('button');
+  const homeButton = document.createElement('button');
+
+  const gameFlow = ({ target }, restartButton) => {
     const square = target.closest('.square');
     const squareIndex = square.dataset.index;
     const value = players.mark();
@@ -27,23 +40,58 @@ const displayController = (function displayController() {
     if (!restartButton.style.display) restartButton.style.display = 'block';
   };
 
-  const init = (gameBoard, players, root) => {
-    players.setNames('Saad', 'David');
-    players.render(root);
-    gameBoard.render(root);
+  const gameInit = (root) => {
+    homeView.remove();
+    gameWrapper.id = 'game-wrapper';
+    root.append(gameWrapper);
+    players.setNames(homeView.getNames().nameP1, homeView.getNames().nameP2);
+    players.render(gameWrapper);
+    gameBoard.render(gameWrapper);
 
+    homeButton.id = 'home-button';
+    homeButton.insertAdjacentHTML('beforeEnd', '<i class="fas fa-home"></i>');
+    homeButton.classList.add('btn', 'btn-primary', 'waves-effect', 'waves-light');
     restart.id = 'restart';
     restart.innerHTML = 'Restart';
-    restart.classList.add('btn', 'aqua-gradient');
-    root.append(restart);
+    restart.classList.add('btn', 'aqua-gradient', 'waves-effect', 'waves-light');
+    gameWrapper.append(homeButton, restart);
 
     gameBoard.getHTMLBoard().addEventListener('click', (e) => {
-      gameFlow(e, gameBoard, players, restart);
+      gameFlow(e, restart);
     });
 
     restart.addEventListener('click', () => {
       gameBoard.reset();
       players.reset();
+    });
+
+    homeButton.addEventListener('click', () => {
+      gameWrapper.remove();
+      homeView.attach(root);
+    });
+  };
+
+  const attachGame = (root) => {
+    homeView.remove();
+    root.append(gameWrapper);
+    gameBoard.reset();
+    players.setNames(homeView.getNames().nameP1, homeView.getNames().nameP2);
+    players.reset();
+    restart.style.display = '';
+  };
+
+  const init = (root) => {
+    homeView.render(root);
+
+    homeView.playButton().addEventListener('click', (e) => {
+      e.preventDefault();
+
+      if (gameWrapper.innerHTML) {
+        attachGame(root);
+        return;
+      }
+
+      gameInit(root);
     });
   };
 

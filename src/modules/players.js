@@ -11,8 +11,10 @@ const players = (function players() {
   };
 
   const setNames = (name1, name2) => {
-    first.name = name1;
-    second.name = name2;
+    first.name = 'anonymous-1';
+    second.name = 'anonymous-2';
+    if (name1) first.name = name1;
+    if (name2) second.name = name2;
   };
 
   const next = () => (nextIsX ? first.name : second.name);
