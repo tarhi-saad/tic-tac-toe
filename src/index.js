@@ -57,7 +57,6 @@
  * - Render 'inputs' & 'Start button' (before rendering the game board)
  * - Click 'Start' => Remove the first view, then render the 'GameBoard' (with the given names)
  * - Add 'Home button' in the 'GameBoard' view to => Remove this view, then render the 'Home' view
- * - 
  * ==================================================
  * * Implement the 'AI' feature
  * * Add an option to choose between 'Ai' and 'Human'
@@ -67,8 +66,15 @@
  * * Different colors for 'X' & 'O', and also the 'Board'
  */
 
+import bsCustomFileInput from 'mdbootstrap/js/modules/bs-custom-file-input';
+import 'mdbootstrap';
+import 'mdbootstrap/css/bootstrap.min.css';
+import 'mdbootstrap/css/mdb.min.css';
+import '@fortawesome/fontawesome-free/css/all.min.css';
 import displayController from './modules/displayController';
 import './style.css';
+
+window.bsCustomFileInput = bsCustomFileInput;
 
 const root = document.getElementById('root');
 

@@ -1,12 +1,10 @@
 @font-face {
   font-family: 'LuckiestGuy';
   src: url('./fonts/LuckiestGuy-Regular.ttf') format('woff2');
-  /* font-weight: 600; */
   font-style: normal;
 }
 
 body {
-  /* background: #4992d3; */
   background: linear-gradient(40deg, #45cafc, #303f9f);
   background-attachment: fixed;
   background-repeat: no-repeat;
@@ -14,28 +12,30 @@ body {
   font-size: 24px;
 }
 
-h1 {
-  position: absolute;
-  left: 20px;
-  top: 10px;
-}
-
 button#restart {
   font-size: 1em;
 }
 
-#root {
+.wrapper {
+  height: 100vh;
   display: flex;
-  flex-direction: column;
+  width: 100%;
   align-items: center;
-  background: #fff;
-  max-width: 960px;
-  margin: 40px auto 0;
-  padding: 80px 0 15px;
-  position: relative;
 }
 
-@media (max-width: 980px) {
+#root {
+  display: flex;
+  justify-content: center;
+  background: #fff;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 75px 0 20px;
+  position: relative;
+  height: 610px;
+  width: 100%;
+}
+
+@media (max-width: 840px) {
   #root {
     margin: 40px 20px 0;
   }
@@ -199,8 +199,9 @@ button#restart {
 
 #home-button {
   position: absolute;
-  top: 51px;
-  left: 26px;
+  top: -65px;
+  left: 20px;
+  margin: 0;
   border-radius: 50%;
   padding: 0;
   width: 61.1px;
@@ -221,13 +222,29 @@ button#restart {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
 }
 
 /**
 * Home
 */
 
+#home-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 55px;
+}
+
+#home-wrapper h1 {
+  margin-bottom: 30px;
+  font-size: 3.5rem;
+}
+
 #game-form {
+  align-self: center;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -244,6 +261,7 @@ button#restart {
 
 button#play {
   font-size: 1.5rem;
+  margin-top: 40px;
 }
 
 button#play i {
@@ -251,4 +269,84 @@ button#play i {
   top: 2px;
   left: 4px;
   margin-right: 4px;
+}
+
+/**
+ * ----------------------------------------
+ * animation slide-out-left
+ * ----------------------------------------
+ */
+.slide-out-left {
+  animation: slide-out-left 0.3s cubic-bezier(0.55, 0.085, 0.68, 0.53) both;
+}
+
+@keyframes slide-out-left {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-100px);
+    opacity: 0;
+  }
+}
+
+/**
+ * ----------------------------------------
+ * animation slide-in-left
+ * ----------------------------------------
+ */
+.slide-in-left {
+  animation: slide-in-left 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+@keyframes slide-in-left {
+  0% {
+    transform: translateX(-100px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/**
+ * ----------------------------------------
+ * animation slide-in-right
+ * ----------------------------------------
+ */
+.slide-in-right {
+  animation: slide-in-right 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+@keyframes slide-in-right {
+  0% {
+    transform: translateX(100px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/**
+ * ----------------------------------------
+ * animation slide-out-right
+ * ----------------------------------------
+ */
+.slide-out-right {
+  animation: slide-out-right 0.3s cubic-bezier(0.55, 0.085, 0.68, 0.53) both;
+}
+
+@keyframes slide-out-right {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100px);
+    opacity: 0;
+  }
 }

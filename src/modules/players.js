@@ -37,12 +37,12 @@ const players = (function players() {
         break;
       case 'win':
         container.innerHTML = `Congratulation to player: ${next()}`;
-        container.classList.add('alert-primary');
+        container.classList.add('alert-primary', 'animated', 'tada');
         container.classList.remove('alert-info');
         break;
       case 'tie':
         container.innerHTML = 'It\' a tie!';
-        container.classList.add('alert-warning');
+        container.classList.add('alert-warning', 'animated', 'shake');
         container.classList.remove('alert-info');
         break;
       default:

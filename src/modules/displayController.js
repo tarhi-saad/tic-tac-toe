@@ -1,13 +1,6 @@
-import bsCustomFileInput from 'mdbootstrap/js/modules/bs-custom-file-input';
-import 'mdbootstrap';
-import 'mdbootstrap/css/bootstrap.min.css';
-import 'mdbootstrap/css/mdb.min.css';
-import '@fortawesome/fontawesome-free/css/all.min.css';
 import homeView from './homeView';
 import gameBoard from './gameboard';
 import players from './players';
-
-window.bsCustomFileInput = bsCustomFileInput;
 
 const displayController = (function displayController() {
   const gameWrapper = document.createElement('div');
@@ -66,8 +59,16 @@ const displayController = (function displayController() {
     });
 
     homeButton.addEventListener('click', () => {
-      gameWrapper.remove();
-      homeView.attach(root);
+      gameWrapper.classList.remove('slide-in-right');
+      gameWrapper.classList.add('slide-out-right');
+
+      const animationHandler = () => {
+        gameWrapper.remove();
+        homeView.attach(root);
+        homeView.getForm().classList.add('slide-in-left');
+        gameWrapper.removeEventListener('animationend', animationHandler);
+      };
+      gameWrapper.addEventListener('animationend', animationHandler);
     });
   };
 
@@ -85,13 +86,24 @@ const displayController = (function displayController() {
 
     homeView.playButton().addEventListener('click', (e) => {
       e.preventDefault();
+      homeView.getForm().classList.remove('slide-in-left');
+      homeView.getForm().classList.add('slide-out-left');
+      gameWrapper.classList.remove('slide-out-right');
+      gameWrapper.classList.add('slide-in-right');
 
-      if (gameWrapper.innerHTML) {
-        attachGame(root);
-        return;
-      }
+      const animationHandler = () => {
+        homeView.getForm().classList.remove('slide-out-left');
+        homeView.getForm().removeEventListener('animationend', animationHandler);
 
-      gameInit(root);
+        if (gameWrapper.innerHTML) {
+          attachGame(root);
+          return;
+        }
+
+        gameInit(root);
+      };
+
+      homeView.getForm().addEventListener('animationend', animationHandler);
     });
   };
 

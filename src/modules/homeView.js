@@ -1,4 +1,5 @@
 const homeView = (function homeView() {
+  const homeWrapper = document.createElement('div');
   const form = document.createElement('form');
   const HTMLForm = `
     <div id="block-p1" class="md-form">
@@ -19,16 +20,22 @@ const homeView = (function homeView() {
   `;
 
   const render = (root) => {
+    const gameTitle = document.createElement('h1');
+    homeWrapper.id = 'home-wrapper';
+    gameTitle.innerHTML = 'Tic Tac Toe';
     form.id = 'game-form';
     form.insertAdjacentHTML('beforeEnd', HTMLForm);
-    root.append(form);
+    homeWrapper.append(gameTitle, form);
+    root.append(homeWrapper);
   };
 
   const playButton = () => form.elements.play;
 
-  const remove = () => form.remove();
+  const remove = () => homeWrapper.remove();
 
-  const attach = (root) => root.append(form);
+  const getForm = () => homeWrapper;
+
+  const attach = (root) => root.append(homeWrapper);
 
   const getNames = () => ({
     nameP1: form.elements.nameP1.value,
@@ -41,6 +48,7 @@ const homeView = (function homeView() {
     remove,
     attach,
     getNames,
+    getForm,
   };
 }());
 
