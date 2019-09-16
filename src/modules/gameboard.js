@@ -59,6 +59,36 @@ const gameBoard = (function gameBoard() {
     });
   };
 
+  const drawWinLine = (combination) => {
+    switch (`${combination}`) {
+      case '0,1,2':
+        document.getElementById('win-line1').style.strokeDashoffset = 0;
+        break;
+      case '3,4,5':
+        document.getElementById('win-line2').style.strokeDashoffset = 0;
+        break;
+      case '6,7,8':
+        document.getElementById('win-line3').style.strokeDashoffset = 0;
+        break;
+      case '0,4,8':
+        document.getElementById('win-line4').style.strokeDashoffset = 0;
+        break;
+      case '2,4,6':
+        document.getElementById('win-line5').style.strokeDashoffset = 0;
+        break;
+      case '0,3,6':
+        document.getElementById('win-line6').style.strokeDashoffset = 0;
+        break;
+      case '1,4,7':
+        document.getElementById('win-line7').style.strokeDashoffset = 0;
+        break;
+      case '2,5,8':
+        document.getElementById('win-line8').style.strokeDashoffset = 0;
+        break;
+      default:
+    }
+  };
+
   const isWinner = () => {
     const possibilities = [
       [0, 1, 2],
@@ -71,9 +101,22 @@ const gameBoard = (function gameBoard() {
       [2, 4, 6],
     ];
 
-    return possibilities.some((arr) => gameboard[arr[0]]
-      && gameboard[arr[0]] === gameboard[arr[1]]
-      && gameboard[arr[0]] === gameboard[arr[2]]);
+    let combination = null;
+
+    const state = possibilities.some((arr) => {
+      const test = gameboard[arr[0]] && gameboard[arr[0]] === gameboard[arr[1]] && gameboard[arr[0]]
+      === gameboard[arr[2]];
+
+      if (test) {
+        combination = arr;
+      }
+
+      return test;
+    });
+
+    if (state) drawWinLine(combination);
+
+    return state;
   };
 
   const get = () => gameboard;

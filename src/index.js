@@ -63,7 +63,11 @@
  * * Add Sound effects!
  * TODO: Animation & effects
  * * Win effect: add straight line show the wining combination
+ * "isWinner" checks the winning combination
+ * "some" does not return the winning value
  * * Different colors for 'X' & 'O', and also the 'Board'
+ * =====================================================
+ * TODO: AI...
  */
 
 import bsCustomFileInput from 'mdbootstrap/js/modules/bs-custom-file-input';
