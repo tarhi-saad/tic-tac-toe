@@ -48,15 +48,20 @@ const gameBoard = (function gameBoard() {
   const reset = () => {
     gameboard.fill(null);
     board.querySelectorAll('li').forEach((li) => {
-      li.querySelector('.svg-x-mark').style.opacity = 0;
-      li.querySelector('.svg-x-mark .path-x-1').style.strokeDashoffset = 0;
-      li.querySelector('.svg-x-mark .path-x-2').style.strokeDashoffset = 0;
-      li.querySelector('.svg-o-mark').style.opacity = 0;
-      li.querySelector('.svg-o-mark .path-o-mark').style.strokeDashoffset = 0;
-      // board svg
-      document.getElementById('svg-board').remove();
-      renderSvgBoard();
+      if (li.querySelector('.svg-x-mark').style.opacity) {
+        li.querySelector('.svg-x-mark').style.opacity = '';
+        li.querySelector('.svg-x-mark .path-x-1').style.strokeDashoffset = '';
+        li.querySelector('.svg-x-mark .path-x-2').style.strokeDashoffset = '';
+      }
+
+      if (li.querySelector('.svg-o-mark').style.opacity) {
+        li.querySelector('.svg-o-mark').style.opacity = '';
+        li.querySelector('.svg-o-mark .path-o-mark').style.strokeDashoffset = '';
+      }
     });
+    // board svg
+    document.getElementById('svg-board').remove();
+    renderSvgBoard();
   };
 
   const drawWinLine = (combination) => {

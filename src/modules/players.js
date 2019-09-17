@@ -27,8 +27,6 @@ const players = (function players() {
   const mark = () => (nextIsX ? 'X' : 'O');
 
   const displayState = (state) => {
-    container.innerHTML = state;
-
     switch (state) {
       case 'first':
         container.innerHTML = `Next player: ${first.name}`;
