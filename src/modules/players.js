@@ -1,74 +1,40 @@
-const players = (function players() {
-  let nextIsX = true;
-  const container = document.createElement('div');
-  const first = {
-    name: 'anonymous-1',
-    turn: nextIsX,
-  };
-  const second = {
-    name: 'anonymous-2',
-    turn: !nextIsX,
-  };
+const player = (state) => ({
+  play: () => state.mark,
+  switchMark: () => {
+    state.mark = state.mark === 'X' ? 'O' : 'X';
+  },
+  getTurn: () => state.turn,
+  getName: () => state.name,
+  getType: () => state.type,
+});
 
-  const setNames = (name1, name2) => {
-    first.name = 'anonymous-1';
-    second.name = 'anonymous-2';
-    if (name1) first.name = name1;
-    if (name2) second.name = name2;
+const humanPlayer = () => {
+  const state = {
+    name: 'Anonymous',
+    mark: 'X',
+    type: 'Human',
   };
 
-  const next = () => (nextIsX ? first.name : second.name);
-
-  const switchTurns = () => {
-    nextIsX = !nextIsX;
-    container.innerHTML = `Next player: ${next()}`;
-  };
-
-  const mark = () => (nextIsX ? 'X' : 'O');
-
-  const displayState = (state) => {
-    switch (state) {
-      case 'first':
-        container.innerHTML = `Next player: ${first.name}`;
-        container.className = '';
-        container.classList.add('alert', 'alert-info');
-        break;
-      case 'win':
-        container.innerHTML = `Congratulation to player: ${next()}`;
-        container.classList.add('alert-primary', 'animated', 'tada');
-        container.classList.remove('alert-info');
-        break;
-      case 'tie':
-        container.innerHTML = 'It\' a tie!';
-        container.classList.add('alert-warning', 'animated', 'shake');
-        container.classList.remove('alert-info');
-        break;
-      default:
-        container.innerHTML = `Next player: ${next()}`;
-    }
-  };
-
-  const reset = () => {
-    nextIsX = true;
-    displayState('first');
-  };
-
-  const render = (root) => {
-    container.id = 'game-status';
-    container.classList.add('alert', 'alert-info');
-    container.role = 'alert';
-    displayState('first');
-    root.append(container);
+  const setName = (name) => {
+    state.name = name || state.name;
   };
 
   return {
-    setNames,
-    switchTurns,
-    mark,
-    render,
-    reset,
-    displayState,
+    ...player(state),
+    setName,
   };
-}());
+};
 
-export default players;
+const aiPlayer = () => {
+  const state = {
+    name: 'AI',
+    mark: 'O',
+    type: 'AI',
+  };
+
+  return {
+    ...player(state),
+  };
+};
+
+export { humanPlayer, aiPlayer };

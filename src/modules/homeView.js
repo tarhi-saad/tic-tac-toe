@@ -2,6 +2,10 @@ const homeView = (function homeView() {
   const homeWrapper = document.createElement('div');
   const form = document.createElement('form');
   const HTMLForm = `
+    <div class="custom-control custom-switch" id="players-option">
+      <input type="checkbox" name="players" class="custom-control-input" id="customSwitches">
+      <label class="custom-control-label" for="customSwitches">AI?</label>
+    </div>
     <div id="block-p1" class="md-form">
       <div class="input-name">
         <i class="fas fa-times prefix"></i>
@@ -16,7 +20,9 @@ const homeView = (function homeView() {
         <label for="input-p2">Player2 name</label>
       </div>
     </div>
-    <button type="submit" id="play" name="play" class="btn peach-gradient text-center">PLAY<i class="far fa-play-circle" aria-hidden="true"></i></button>
+    <button type="submit" id="play" name="play" class="btn peach-gradient text-center">
+      PLAY<i class="far fa-play-circle" aria-hidden="true"></i>
+    </button>
   `;
 
   const render = (root) => {
@@ -27,6 +33,15 @@ const homeView = (function homeView() {
     form.insertAdjacentHTML('beforeEnd', HTMLForm);
     homeWrapper.append(gameTitle, form);
     root.append(homeWrapper);
+
+    const { players } = form.elements;
+    const blockInput2 = form.querySelector('#block-p2');
+
+    const handleChange = () => {
+      blockInput2.style.display = players.checked ? 'none' : '';
+    };
+
+    players.addEventListener('change', handleChange);
   };
 
   const playButton = () => form.elements.play;
@@ -42,6 +57,8 @@ const homeView = (function homeView() {
     nameP2: form.elements.nameP2.value,
   });
 
+  const modeAi = () => form.elements.players.checked;
+
   return {
     render,
     playButton,
@@ -49,6 +66,7 @@ const homeView = (function homeView() {
     attach,
     getNames,
     getForm,
+    modeAi,
   };
 }());
 

@@ -238,6 +238,7 @@ button#restart {
   flex-direction: column;
   align-items: center;
   margin-bottom: 55px;
+  position: relative;
 }
 
 #home-wrapper h1 {
@@ -271,6 +272,13 @@ button#play i {
   top: 2px;
   left: 4px;
   margin-right: 4px;
+}
+
+#players-option {
+  position: absolute;
+  top: 0;
+  left: 17%;
+  user-select: none;
 }
 
 /**
