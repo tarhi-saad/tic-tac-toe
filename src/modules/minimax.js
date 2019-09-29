@@ -92,125 +92,64 @@ const minimax = (() => {
    * @param {string[] | null[]} state A state of the game
    * @returns {utility} Returns the highest utility at a given state
    */
-  const minimaxAlgorithm = (state, depth = 0) => {
-    let alpha = -Infinity;
-    let beta = +Infinity;
+  const minimaxAlgorithm = (
+    state,
+    depth = 0,
+    alpha = -Infinity,
+    beta = +Infinity,
+    maximizingPlayer = 'X',
+  ) => {
     depth += 1;
 
-    if (terminal(state)) return utility(state, 'X');
+    if (terminal(state)) return utility(state, maximizingPlayer);
 
-    if (player(state) === 'X') {
-      let evaMax = null;
-      return Math.max(...actions(state).map((a) => {
-        evaMax = minimaxAlgorithm(result(state, a), depth);
+    if (player(state) === maximizingPlayer) {
+      let evaMax = -Infinity;
+      actions(state).some((a) => {
+        const eva = minimaxAlgorithm(result(state, a), depth, alpha, beta);
 
-        if (depth === 1 && alpha < evaMax) {
-          alpha = evaMax;
-          best = a;
-        }
+        if (depth === 1 && evaMax < eva) best = a;
 
-        return evaMax;
-      }));
+        evaMax = Math.max(evaMax, eva);
+        alpha = Math.max(alpha, evaMax);
+
+        if (beta <= alpha) return true;
+
+        return false;
+      });
+
+      return evaMax;
     }
 
-    let evaMin = null;
-    return Math.min(...actions(state).map((a) => {
-      evaMin = minimaxAlgorithm(result(state, a), depth);
+    let evaMin = +Infinity;
+    actions(state).some((a) => {
+      const eva = minimaxAlgorithm(result(state, a), depth, alpha, beta);
 
-      if (depth === 1 && beta > evaMin) {
-        beta = evaMin;
-        best = a;
-      }
+      if (depth === 1 && evaMin > eva) best = a;
 
-      return evaMin;
-    }));
+      evaMin = Math.min(evaMin, eva);
+      beta = Math.min(beta, evaMin);
+
+      if (beta <= alpha) return true;
+
+      return false;
+    });
+
+    return evaMin;
   };
 
   /**
-   * Returns The best moves with the highest utility for a given state
+   * Returns The first best with the highest utility for a given state
    * @param {string[] | null[]} state A state of the game
-   * @returns {number[]} list of Best moves
+   * @returns {number} First best move
    */
   const bestMove = (state) => {
-    // const minimaxCurrent = minimaxAlgorithm(state);
-    // const moves = [];
-    // actions(state).forEach((a) => {
-    //   if (minimaxCurrent === minimaxAlgorithm(result(state, a))) moves.push(a);
-    // });
-    // return moves;
-
     minimaxAlgorithm(state);
     return best;
   };
 
-  /**
-   * Returns the best move in the second state for the second player
-   * This function is used initialy instead of the minimax algorithm for performance reasons
-   * @param {string[] | null[]} secondState The second state of the game
-   * @returns {number} The best move
-   */
-  const firstMove = (secondState) => {
-    let move = null;
-
-    secondState.some((square, i) => {
-      if (square === null) return false;
-
-      let isBest = false;
-
-      switch (i) {
-        case 4: {
-          const bestMoves = [0, 2, 6, 8];
-          move = bestMoves[Math.floor(Math.random() * 4)];
-          isBest = true;
-          break;
-        }
-
-        case 0:
-        case 2:
-        case 6:
-        case 8:
-          move = 4;
-          isBest = true;
-          break;
-
-        case 1: {
-          const bestMoves = [0, 2, 4, 7];
-          move = bestMoves[Math.floor(Math.random() * 4)];
-          isBest = true;
-          break;
-        }
-        case 3: {
-          const bestMoves = [0, 4, 5, 6];
-          move = bestMoves[Math.floor(Math.random() * 4)];
-          isBest = true;
-          break;
-        }
-        case 5: {
-          const bestMoves = [2, 3, 4, 8];
-          move = bestMoves[Math.floor(Math.random() * 4)];
-          isBest = true;
-          break;
-        }
-        case 7: {
-          const bestMoves = [1, 4, 6, 8];
-          move = bestMoves[Math.floor(Math.random() * 4)];
-          isBest = true;
-          break;
-        }
-
-        default:
-          break;
-      }
-
-      return isBest;
-    });
-
-    return move;
-  };
-
   return {
     bestMove,
-    firstMove,
   };
 })();
 
