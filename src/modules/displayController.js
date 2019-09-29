@@ -1,6 +1,7 @@
 import homeView from './homeView';
 import gameBoard from './gameboard';
 import { humanPlayer, aiPlayer } from './players';
+import minimax from './minimax';
 
 const displayController = (function displayController() {
   const gameWrapper = document.createElement('div');
@@ -91,162 +92,14 @@ const displayController = (function displayController() {
     return false;
   };
 
-  const nextPlayer = (state) => {
-    let X = 0;
-    let O = 0;
-    state.forEach((square) => {
-      if (square === 'X') X += 1;
-      if (square === 'O') O += 1;
-    });
-
-    return X && X > O ? 'O' : 'X';
-  };
-
-  const actions = (state) => (state.map((square, i) => (square === null ? i : null)))
-    .filter((square) => square !== null);
-
-  const result = (state, action) => {
-    const newState = [...state];
-    newState[action] = nextPlayer(newState);
-    return newState;
-  };
-
-  const terminal = (state) => {
-    const possibilities = [
-      [0, 1, 2],
-      [3, 4, 5],
-      [6, 7, 8],
-      [0, 3, 6],
-      [1, 4, 7],
-      [2, 5, 8],
-      [0, 4, 8],
-      [2, 4, 6],
-    ];
-
-    return possibilities.some((arr) => state[arr[0]] && state[arr[0]] === state[arr[1]]
-    && state[arr[0]] === state[arr[2]]) || state.indexOf(null) === -1;
-  };
-
-  const utility = (state, player) => {
-    const possibilities = [
-      [0, 1, 2],
-      [3, 4, 5],
-      [6, 7, 8],
-      [0, 3, 6],
-      [1, 4, 7],
-      [2, 5, 8],
-      [0, 4, 8],
-      [2, 4, 6],
-    ];
-
-    const win = possibilities.some((arr) => state[arr[0]] && state[arr[0]] === state[arr[1]]
-    && state[arr[0]] === state[arr[2]]);
-
-    if (state.indexOf(null) === -1 && !win) return 0;
-
-    if (win && player === nextPlayer(state)) return -1;
-
-    if (win && player !== nextPlayer(state)) return 1;
-
-    return 'Game still going';
-  };
-
-  const minimax = (state) => {
-    if (terminal(state)) return utility(state, 'X');
-
-    if (nextPlayer(state) === 'X') {
-      return Math.max(...actions(state).map((a) => minimax(result(state, a))));
-    }
-
-    return Math.min(...actions(state).map((a) => minimax(result(state, a))));
-  };
-
-  const bestMove = (state) => {
-    const minimaxCurrent = minimax(state);
-    const moves = [];
-    actions(state).forEach((a) => {
-      if (minimaxCurrent === minimax(result(state, a))) moves.push(a);
-    });
-
-    return moves;
-  };
-
-  const firstMove = () => {
-    const lastState = gameBoard.get();
-
-    return lastState.some((square, i) => {
-      if (square === null) return false;
-
-      // if (i === 4) {
-      //   const bestMoves = [0, 2, 6, 8];
-      //   move = bestMoves[Math.floor(Math.random() * 4)];
-      //   return true;
-      // }
-
-      let isBest = false;
-
-      switch (i) {
-        case 4: {
-          const bestMoves = [0, 2, 6, 8];
-          move = bestMoves[Math.floor(Math.random() * 4)];
-          isBest = true;
-          break;
-        }
-
-        case 0 || 2 || 6 || 8:
-          move = 4;
-          isBest = true;
-          break;
-
-        case 1: {
-          const bestMoves = [0, 2, 4, 7];
-          move = bestMoves[Math.floor(Math.random() * 4)];
-          isBest = true;
-          break;
-        }
-        case 3: {
-          const bestMoves = [0, 4, 5, 6];
-          move = bestMoves[Math.floor(Math.random() * 4)];
-          isBest = true;
-          break;
-        }
-        case 5: {
-          const bestMoves = [2, 3, 4, 8];
-          move = bestMoves[Math.floor(Math.random() * 4)];
-          isBest = true;
-          break;
-        }
-        case 7: {
-          const bestMoves = [1, 4, 6, 8];
-          move = bestMoves[Math.floor(Math.random() * 4)];
-          isBest = true;
-          break;
-        }
-
-        default:
-          break;
-      }
-
-      return isBest;
-    });
-  };
-
   const aiFlow = (squareIndex) => {
     document.body.style.pointerEvents = 'none';
-
     const transitionHandler = () => {
-      // const availableActions = actions(gameBoard.get());
-      // const t0 = Date.now();
-      // console.log(Date.now() - t0, 's || Actions: ', availableActions);
-
       if (willWin()) {
         gameBoard.add(move, 'O');
-      } else if (history.length === 1 && firstMove()) {
-        gameBoard.add(move, 'O');
       } else {
-        const availableActions = bestMove(gameBoard.get());
-        const AiMove = Math.floor(Math.random() * availableActions.length);
-        gameBoard.add(availableActions[AiMove], 'O');
+        const bestMove = minimax.bestMove(gameBoard.get());
+        gameBoard.add(bestMove, 'O');
       }
 
       if (gameBoard.isWinner()) {
