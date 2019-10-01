@@ -1,0 +1,13 @@
+@font-face {
+  font-family: 'LuckiestGuy';
+  src: url('../fonts/LuckiestGuy-Regular.ttf') format('woff2');
+  font-style: normal;
+}
+
+body {
+  background: linear-gradient(40deg, #45cafc, #303f9f);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  font-family: LuckiestGuy, Roboto, sans-serif;
+  font-size: 24px;
+}

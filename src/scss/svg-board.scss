@@ -1,0 +1,41 @@
+/**
+* SVG board
+*/
+
+#svg-board {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: -4px;
+  left: -5px;
+  opacity: 0;
+  transition: opacity 0.15s;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.svg-board-line {
+  stroke: #fff;
+  stroke-dashoffset: 0;
+  stroke-width: 1mm;
+}
+
+#svg-board-line1 {
+  stroke-dasharray: 94;
+  transition: stroke-dashoffset 0.1s 0.3s ease-in-out;
+}
+
+#svg-board-line2 {
+  stroke-dasharray: 94;
+  transition: stroke-dashoffset 0.1s 0.2s ease-in-out;
+}
+
+#svg-board-line3 {
+  stroke-dasharray: 96;
+  transition: stroke-dashoffset 0.1s 0.1s ease-in-out;
+}
+
+#svg-board-line4 {
+  stroke-dasharray: 96;
+  transition: stroke-dashoffset 0.1s ease-in-out;
+}

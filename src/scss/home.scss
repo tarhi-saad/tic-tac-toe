@@ -1,0 +1,50 @@
+#home-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 55px;
+  position: relative;
+
+  h1 {
+    margin-bottom: 30px;
+    font-size: 3.5rem;
+  }
+
+  #game-form {
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    #players-option {
+      position: absolute;
+      top: 0;
+      left: 17%;
+      user-select: none;
+    }
+
+    .md-form {
+      .prefix {
+        top: 0.25rem;
+      }
+
+      label {
+        color: #7575758a;
+      }
+    }
+
+    button#play {
+      font-size: 1.5rem;
+      margin-top: 40px;
+
+      i {
+        position: relative;
+        top: 2px;
+        left: 4px;
+        margin-right: 4px;
+      }
+    }
+  }
+}
