@@ -18,24 +18,101 @@
     flex-direction: column;
     align-items: center;
 
+    .players-block {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+
+      .players-label {
+        margin-right: 5px;
+        font-size: 0.9em;
+      }
+    }
+
     #players-option {
-      position: absolute;
-      top: 0;
-      left: 17%;
+      width: 111px;
+      height: 54px;
       user-select: none;
+      padding: 0;
 
       label {
         color: #212529;
         cursor: pointer;
+        font-family: 'Font Awesome 5 Free';
+        font-weight: 900;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        margin: 0;
+        z-index: 2;
 
         &::before {
-          background-color: #fff;
+          // background-color: #fff;
+          content: '';
+          left: 4px;
+          background-color: #1c71ff;
+        }
+
+        &::after {
+          content: '\f007';
+          right: 6px;
+          color: #4e4e4e;
+        }
+
+        i {
+          display: inline-block;
+          left: 4px;
+          color: #fff;
+          z-index: 1;
+        }
+
+        &::before,
+        &::after,
+        i {
+          position: absolute;
+          top: 4px;
+          width: 30px;
+          height: 19px;
+          font-size: 24px;
+          font-weight: bold;
+          text-align: center;
+          line-height: 1;
+          padding: 13px 6px;
+          border-radius: 2px;
+          transition: 0.3s ease all;
+          box-sizing: unset;
         }
       }
 
       input:checked ~ label::before {
-        background-color: #007bff;
+        left: 63px;
+        background-color: #ff9a3b;
+      }
+
+      input:checked ~ label::after {
         color: #fff;
+      }
+
+      input:checked ~ label i {
+        color: #4e4e4e;
+      }
+
+      .layer {
+        width: 100%;
+        background-color: #e1ecfd;
+        transition: 0.3s ease all;
+        z-index: 1;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+      }
+
+      input:checked ~ .layer {
+        background-color: #fff0e2;
       }
     }
 

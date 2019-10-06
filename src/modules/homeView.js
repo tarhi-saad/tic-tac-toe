@@ -12,9 +12,15 @@ const homeView = (function homeView() {
     </div>
   `);
   const HTMLForm = `
-    <div class="custom-control custom-switch" id="players-option">
-      <input type="checkbox" name="players" class="custom-control-input" id="customSwitches" checked>
-      <label class="custom-control-label" for="customSwitches">AI?</label>
+    <div class="players-block">
+      <span class="players-label">Players &#9658;</span>
+      <div class="custom-control custom-switch" id="players-option">
+        <input type="checkbox" name="players" class="custom-control-input" id="customSwitches" checked>
+        <label class="" for="customSwitches">
+          <i class="fas fa-user-friends"></i>
+        </label>
+        <div class="layer"></div>
+      </div>
     </div>
     <div id="block-p1" class="md-form">
       <div class="input-name">
