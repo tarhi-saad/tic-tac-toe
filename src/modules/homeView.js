@@ -1,9 +1,19 @@
 const homeView = (function homeView() {
   const homeWrapper = document.createElement('div');
   const form = document.createElement('form');
+  const blockInput2 = document.createElement('div');
+  blockInput2.id = 'block-p2';
+  blockInput2.classList.add('md-form');
+  blockInput2.insertAdjacentHTML('beforeend', `
+    <div class="input-name">
+      <i class="far fa-circle prefix"></i>
+      <input type="text" id="input-p2" name="nameP2" class="form-control">
+      <label for="input-p2">Player2 name</label>
+    </div>
+  `);
   const HTMLForm = `
     <div class="custom-control custom-switch" id="players-option">
-      <input type="checkbox" name="players" class="custom-control-input" id="customSwitches">
+      <input type="checkbox" name="players" class="custom-control-input" id="customSwitches" checked>
       <label class="custom-control-label" for="customSwitches">AI?</label>
     </div>
     <div id="block-p1" class="md-form">
@@ -13,17 +23,37 @@ const homeView = (function homeView() {
         <label for="input-p1">Player1 name</label>
       </div>
     </div>
-    <div id="block-p2" class="md-form">
-      <div class="input-name">
-        <i class="far fa-circle prefix"></i>
-        <input type="text" id="input-p2" name="nameP2" class="form-control">
-        <label for="input-p2">Player2 name</label>
+    <div id="difficulty">
+      <div class="btn-group" data-toggle="buttons">
+        <label class="btn btn-light-blue form-check-label active">
+          <input class="form-check-input" type="radio" name="options" id="Easy" autocomplete="off" checked>
+          Easy
+        </label>
+        <label class="btn btn-light-blue form-check-label">
+          <input class="form-check-input" type="radio" name="options" id="Normal" autocomplete="off"> Normal
+        </label>
+        <label class="btn btn-light-blue form-check-label">
+          <input class="form-check-input" type="radio" name="options" id="Impossible" autocomplete="off"> Impossible
+        </label>
       </div>
     </div>
     <button type="submit" id="play" name="play" class="btn peach-gradient text-center">
       PLAY<i class="far fa-play-circle" aria-hidden="true"></i>
     </button>
   `;
+
+  const playButton = () => form.elements.play;
+
+  const modeAi = () => form.elements.players.checked;
+
+  const getDifficulty = () => {
+    let diff = null;
+    form.elements.options.forEach((radio) => {
+      if (radio.checked) diff = radio.id;
+    });
+
+    return diff;
+  };
 
   const render = (root) => {
     const gameTitle = document.createElement('h1');
@@ -35,16 +65,61 @@ const homeView = (function homeView() {
     root.append(homeWrapper);
 
     const { players } = form.elements;
-    const blockInput2 = form.querySelector('#block-p2');
+    const difficulty = document.querySelector('#difficulty');
 
     const handleChange = () => {
-      blockInput2.style.display = players.checked ? 'none' : '';
+      players.disabled = true;
+      if (modeAi()) {
+        blockInput2.classList.remove('slide-in-left');
+        blockInput2.classList.add('slide-out-left');
+        difficulty.classList.remove('slide-out-right');
+        difficulty.classList.add('slide-in-right');
+
+        const animationHandlerInput = () => {
+          blockInput2.remove();
+          playButton().before(difficulty);
+          blockInput2.removeEventListener('animationend', animationHandlerInput);
+        };
+        blockInput2.addEventListener('animationend', animationHandlerInput);
+
+        const animationHandlerDifficulty = () => {
+          difficulty.classList.remove('slide-in-right');
+          players.disabled = false;
+          difficulty.removeEventListener('animationend', animationHandlerDifficulty);
+        };
+        difficulty.addEventListener('animationend', animationHandlerDifficulty);
+      } else {
+        blockInput2.classList.add('slide-in-left');
+        blockInput2.classList.remove('slide-out-left');
+        difficulty.classList.add('slide-out-right');
+        difficulty.classList.remove('slide-in-right');
+
+        const animationHandlerDifficulty = () => {
+          difficulty.remove();
+          playButton().before(blockInput2);
+          difficulty.removeEventListener('animationend', animationHandlerDifficulty);
+        };
+        difficulty.addEventListener('animationend', animationHandlerDifficulty);
+
+        const animationHandlerInput = () => {
+          blockInput2.classList.remove('slide-in-left');
+          players.disabled = false;
+          blockInput2.removeEventListener('animationend', animationHandlerInput);
+        };
+        blockInput2.addEventListener('animationend', animationHandlerInput);
+      }
     };
-
     players.addEventListener('change', handleChange);
-  };
 
-  const playButton = () => form.elements.play;
+    const handleClick = (e) => {
+      const labels = difficulty.querySelectorAll('label');
+      Array.from(labels).forEach((label) => (
+        e.target.closest('label') === label ? label.classList.add('active')
+          : label.classList.remove('active')
+      ));
+    };
+    difficulty.addEventListener('click', handleClick);
+  };
 
   const remove = () => homeWrapper.remove();
 
@@ -52,12 +127,19 @@ const homeView = (function homeView() {
 
   const attach = (root) => root.append(homeWrapper);
 
-  const getNames = () => ({
-    nameP1: form.elements.nameP1.value,
-    nameP2: form.elements.nameP2.value,
-  });
+  const getNames = () => {
+    if (modeAi()) {
+      return {
+        nameP1: form.elements.nameP1.value,
+        nameP2: '',
+      };
+    }
 
-  const modeAi = () => form.elements.players.checked;
+    return {
+      nameP1: form.elements.nameP1.value,
+      nameP2: form.elements.nameP2.value,
+    };
+  };
 
   return {
     render,
@@ -67,6 +149,7 @@ const homeView = (function homeView() {
     getNames,
     getForm,
     modeAi,
+    getDifficulty,
   };
 }());
 

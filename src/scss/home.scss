@@ -23,6 +23,20 @@
       top: 0;
       left: 17%;
       user-select: none;
+
+      label {
+        color: #212529;
+        cursor: pointer;
+
+        &::before {
+          background-color: #fff;
+        }
+      }
+
+      input:checked ~ label::before {
+        background-color: #007bff;
+        color: #fff;
+      }
     }
 
     .md-form {
@@ -33,6 +47,17 @@
       label {
         color: #7575758a;
       }
+    }
+
+    #difficulty {
+      margin: 1.22rem 0;
+    }
+
+    #difficulty [type='radio']:checked,
+    #difficulty [type='radio']:not(:checked) {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
     }
 
     button#play {

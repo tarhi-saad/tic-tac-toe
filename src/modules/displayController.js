@@ -92,15 +92,117 @@ const displayController = (function displayController() {
     return false;
   };
 
+  /**
+   * Returns the best move in the second state for the second player
+   * This function is used initialy instead of the minimax algorithm for performance reasons
+   * @param {string[] | null[]} secondState The second state of the game
+   * @returns {number} The best move
+   */
+  const firstMove = () => {
+    let bestFirstMove = null;
+    const lastState = gameBoard.get();
+
+    lastState.some((square, i) => {
+      if (square === null) return false;
+
+      let isBest = false;
+
+      switch (i) {
+        case 4: {
+          const bestMoves = [0, 2, 6, 8];
+          bestFirstMove = bestMoves[Math.floor(Math.random() * 4)];
+          isBest = true;
+          break;
+        }
+
+        case 0:
+        case 2:
+        case 6:
+        case 8:
+          bestFirstMove = 4;
+          isBest = true;
+          break;
+
+        case 1: {
+          const bestMoves = [0, 2, 4, 7];
+          bestFirstMove = bestMoves[Math.floor(Math.random() * 4)];
+          isBest = true;
+          break;
+        }
+        case 3: {
+          const bestMoves = [0, 4, 5, 6];
+          bestFirstMove = bestMoves[Math.floor(Math.random() * 4)];
+          isBest = true;
+          break;
+        }
+        case 5: {
+          const bestMoves = [2, 3, 4, 8];
+          bestFirstMove = bestMoves[Math.floor(Math.random() * 4)];
+          isBest = true;
+          break;
+        }
+        case 7: {
+          const bestMoves = [1, 4, 6, 8];
+          bestFirstMove = bestMoves[Math.floor(Math.random() * 4)];
+          isBest = true;
+          break;
+        }
+
+        default:
+          break;
+      }
+
+      return isBest;
+    });
+
+    return bestFirstMove;
+  };
+
+  const SetAIDifficulty = (difficulty) => {
+    switch (difficulty) {
+      case 'Easy': {
+        const emptySquares = [];
+        gameBoard.get().forEach((mark, i) => {
+          if (mark) return;
+
+          emptySquares.push(i);
+        });
+        const AiMove = Math.floor(Math.random() * emptySquares.length);
+        gameBoard.add(emptySquares[AiMove], 'O');
+        break;
+      }
+      case 'Normal':
+        if (willWin()) {
+          gameBoard.add(move, 'O');
+        } else if (history.length === 1 && firstMove()) {
+          gameBoard.add(firstMove(), 'O');
+        } else {
+          const emptySquares = [];
+          gameBoard.get().forEach((mark, i) => {
+            if (mark) return;
+
+            emptySquares.push(i);
+          });
+          const AiMove = Math.floor(Math.random() * emptySquares.length);
+          gameBoard.add(emptySquares[AiMove], 'O');
+        }
+        break;
+      case 'Impossible':
+        if (willWin()) {
+          gameBoard.add(move, 'O');
+        } else {
+          const bestMove = minimax.bestMove(gameBoard.get());
+          gameBoard.add(bestMove, 'O');
+        }
+        break;
+      default:
+    }
+  };
+
   const aiFlow = (squareIndex) => {
     document.body.style.pointerEvents = 'none';
     const transitionHandler = () => {
-      if (willWin()) {
-        gameBoard.add(move, 'O');
-      } else {
-        const bestMove = minimax.bestMove(gameBoard.get());
-        gameBoard.add(bestMove, 'O');
-      }
+      SetAIDifficulty(homeView.getDifficulty());
 
       if (gameBoard.isWinner()) {
         displayState('win');
