@@ -10,7 +10,8 @@ const displayController = (function displayController() {
   const container = document.createElement('div');
   let p1 = null;
   let p2 = null;
-  let nextIsX = true;
+  let p1Turn = true;
+  let nextIsX = p1Turn;
 
   const next = () => (nextIsX ? p1.getName() : p2.getName());
 
@@ -20,9 +21,15 @@ const displayController = (function displayController() {
         container.className = '';
         container.innerHTML = '';
         container.insertAdjacentHTML('beforeEnd', `
-          <div id ="first-status" class="player-status alert alert-info active" role="alert">${p1.getName()}</div>
+          <div id ="first-status" class="player-status alert alert-info" role="alert">${p1.getName()}</div>
           <div id="second-status" class="player-status alert alert-info" role="alert">${p2.getName()}</div>
         `);
+
+        if (p1Turn) {
+          container.querySelector('#first-status').classList.add('active');
+        } else {
+          container.querySelector('#second-status').classList.add('active');
+        }
         break;
       case 'continue':
         if (nextIsX) {
@@ -36,10 +43,14 @@ const displayController = (function displayController() {
       case 'win':
         container.innerHTML = `Congratulation to player: ${next()}`;
         container.classList.add('alert-primary', 'animated', 'tada', 'status-result');
+        p1Turn = !p1Turn;
+        nextIsX = p1Turn;
         break;
       case 'tie':
         container.innerHTML = 'It\' a tie!';
         container.classList.add('alert-warning', 'animated', 'shake', 'status-result');
+        p1Turn = !p1Turn;
+        nextIsX = p1Turn;
         break;
       default:
         container.innerHTML = `Next player: ${next()}`;
@@ -206,17 +217,24 @@ const displayController = (function displayController() {
     }
   };
 
-  const aiFlow = (squareIndex) => {
+  const aiFlow = () => {
     document.body.style.pointerEvents = 'none';
     const transitionHandler = () => {
       SetAIDifficulty(homeView.getDifficulty());
 
       if (gameBoard.isWinner()) {
+        container.querySelector('.player-status')
+          .removeEventListener('transitionend', transitionHandler);
         displayState('win');
         document.body.style.pointerEvents = '';
-        gameBoard.getHTMLBoard().querySelectorAll('li')[squareIndex]
-          .querySelector('.svg-x-mark .path-x-2')
+        return;
+      }
+
+      if (gameBoard.get().indexOf(null) === -1) {
+        container.querySelector('.player-status')
           .removeEventListener('transitionend', transitionHandler);
+        displayState('tie');
+        document.body.style.pointerEvents = '';
         return;
       }
 
@@ -226,6 +244,33 @@ const displayController = (function displayController() {
       container.querySelector('.player-status')
         .removeEventListener('transitionend', transitionHandler);
       document.body.style.pointerEvents = '';
+    };
+
+    container.querySelector('.player-status')
+      .addEventListener('transitionend', transitionHandler);
+  };
+
+  const AIFirstMove = () => {
+    gameBoard.getHTMLBoard().style.pointerEvents = 'none';
+
+    const transitionLineHandler = () => {
+      const AiMove = Math.floor(Math.random() * 9);
+      gameBoard.add(AiMove, 'O');
+
+      nextIsX = !nextIsX;
+      displayState('continue');
+
+      document.getElementById('svg-board-line1')
+        .removeEventListener('transitionend', transitionLineHandler);
+    };
+
+    document.getElementById('svg-board-line1')
+      .addEventListener('transitionend', transitionLineHandler);
+
+    const transitionHandler = () => {
+      container.querySelector('.player-status')
+        .removeEventListener('transitionend', transitionHandler);
+      gameBoard.getHTMLBoard().style.pointerEvents = '';
     };
 
     container.querySelector('.player-status')
@@ -258,7 +303,7 @@ const displayController = (function displayController() {
 
     if (homeView.modeAi()) {
       history.push([].concat(gameBoard.get()));
-      aiFlow(squareIndex);
+      aiFlow();
     }
 
     if (!restartButton.style.display) restartButton.style.display = 'block';
@@ -276,8 +321,10 @@ const displayController = (function displayController() {
   const reset = () => {
     gameBoard.reset();
     displayState('first');
-    nextIsX = true;
+    nextIsX = p1Turn;
     history.splice(0, history.length);
+
+    if (!p1Turn && homeView.modeAi()) AIFirstMove();
   };
 
   const gameInit = (root) => {
@@ -315,10 +362,33 @@ const displayController = (function displayController() {
       };
       gameWrapper.addEventListener('animationend', animationHandler);
     });
+
+    const handleStatusClick = (e) => {
+      const player = e.target.closest('.player-status');
+      gameBoard.getHTMLBoard().style.pointerEvents = '';
+
+      if (player) {
+        gameBoard.reset();
+
+        if (player.id === 'first-status') {
+          p1Turn = true;
+        } else p1Turn = false;
+
+        displayState('first');
+        nextIsX = p1Turn;
+        history.splice(0, history.length);
+
+        if (!p1Turn && homeView.modeAi()) AIFirstMove();
+      }
+    };
+
+    document.getElementById('game-status')
+      .addEventListener('click', handleStatusClick);
   };
 
   const attachGame = (root) => {
     homeView.remove();
+    p1Turn = true;
     root.append(gameWrapper);
     reset();
     restart.style.display = '';
