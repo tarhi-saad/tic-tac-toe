@@ -17,22 +17,29 @@ const displayController = (function displayController() {
   const displayState = (state) => {
     switch (state) {
       case 'first':
-        container.innerHTML = `Next player: ${p1.getName()}`;
         container.className = '';
-        container.classList.add('alert', 'alert-info');
+        container.innerHTML = '';
+        container.insertAdjacentHTML('beforeEnd', `
+          <div id ="first-status" class="player-status alert alert-info active" role="alert">${p1.getName()}</div>
+          <div id="second-status" class="player-status alert alert-info" role="alert">${p2.getName()}</div>
+        `);
         break;
       case 'continue':
-        container.innerHTML = `Next player: ${next()}`;
+        if (nextIsX) {
+          container.querySelector('#first-status').classList.add('active');
+          container.querySelector('#second-status').classList.remove('active');
+        } else {
+          container.querySelector('#first-status').classList.remove('active');
+          container.querySelector('#second-status').classList.add('active');
+        }
         break;
       case 'win':
         container.innerHTML = `Congratulation to player: ${next()}`;
-        container.classList.add('alert-primary', 'animated', 'tada');
-        container.classList.remove('alert-info');
+        container.classList.add('alert-primary', 'animated', 'tada', 'status-result');
         break;
       case 'tie':
         container.innerHTML = 'It\' a tie!';
-        container.classList.add('alert-warning', 'animated', 'shake');
-        container.classList.remove('alert-info');
+        container.classList.add('alert-warning', 'animated', 'shake', 'status-result');
         break;
       default:
         container.innerHTML = `Next player: ${next()}`;
@@ -216,14 +223,12 @@ const displayController = (function displayController() {
       nextIsX = !nextIsX;
       displayState('continue');
 
-      gameBoard.getHTMLBoard().querySelectorAll('li')[squareIndex]
-        .querySelector('.svg-x-mark .path-x-2')
+      container.querySelector('.player-status')
         .removeEventListener('transitionend', transitionHandler);
       document.body.style.pointerEvents = '';
     };
 
-    gameBoard.getHTMLBoard().querySelectorAll('li')[squareIndex]
-      .querySelector('.svg-x-mark .path-x-2')
+    container.querySelector('.player-status')
       .addEventListener('transitionend', transitionHandler);
   };
 
@@ -261,9 +266,10 @@ const displayController = (function displayController() {
 
   const render = (root) => {
     container.id = 'game-status';
-    container.classList.add('alert', 'alert-info');
-    container.role = 'alert';
-    displayState('first');
+    container.insertAdjacentHTML('beforeEnd', `
+      <div id ="first-status" class="player-status alert alert-info active" role="alert">${p1.getName()}</div>
+      <div id="second-status" class="player-status alert alert-info" role="alert">${p2.getName()}</div>
+    `);
     root.append(container);
   };
 
