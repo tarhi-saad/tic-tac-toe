@@ -18,5 +18,6 @@ module.exports = {
       'error',
       { devDependencies: true, optionalDependencies: true, peerDependencies: false },
     ],
+    'no-unused-expressions': ['error', { allowTernary: true }],
   },
 };

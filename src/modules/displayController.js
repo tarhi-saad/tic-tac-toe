@@ -8,6 +8,13 @@ const displayController = (function displayController() {
   const restart = document.createElement('button');
   const homeButton = document.createElement('button');
   const container = document.createElement('div');
+  const score = {
+    p1: [0, 0],
+    p2: 0,
+    ai: 0,
+    tie: 0,
+    tieAi: 0,
+  };
   let p1 = null;
   let p2 = null;
   let p1Turn = true;
@@ -21,8 +28,18 @@ const displayController = (function displayController() {
         container.className = '';
         container.innerHTML = '';
         container.insertAdjacentHTML('beforeEnd', `
-          <div id ="first-status" class="player-status alert alert-info" role="alert">${p1.getName()}</div>
-          <div id="second-status" class="player-status alert alert-info" role="alert">${p2.getName()}</div>
+          <div id ="first-status" class="player-status alert alert-info" role="alert">
+            ${p1.getName()}
+            <span class="score">${homeView.modeAi() ? score.p1[0] : score.p1[1]}</span>
+          </div>
+          <div class="tie">
+            Ties<br>
+            <span class="ties-count">${homeView.modeAi() ? score.tieAi : score.tie}</span>
+          </div>
+          <div id="second-status" class="player-status alert alert-info" role="alert">
+            ${p2.getName()}
+            <span class="score">${homeView.modeAi() ? score.ai : score.p2}</span>
+          </div>
         `);
 
         if (p1Turn) {
@@ -227,6 +244,7 @@ const displayController = (function displayController() {
           .removeEventListener('transitionend', transitionHandler);
         displayState('win');
         document.body.style.pointerEvents = '';
+        score.ai += 1;
         return;
       }
 
@@ -235,6 +253,7 @@ const displayController = (function displayController() {
           .removeEventListener('transitionend', transitionHandler);
         displayState('tie');
         document.body.style.pointerEvents = '';
+        score.tieAi += 1;
         return;
       }
 
@@ -290,11 +309,19 @@ const displayController = (function displayController() {
 
     if (gameBoard.isWinner()) {
       displayState('win');
+
+      if (player === p1) {
+        homeView.modeAi() ? score.p1[0] += 1 : score.p1[1] += 1;
+      } else {
+        score.p2 += 1;
+      }
+
       return;
     }
 
     if (gameBoard.get().indexOf(null) === -1) {
       displayState('tie');
+      homeView.modeAi() ? score.tieAi += 1 : score.tie += 1;
       return;
     }
 
@@ -312,8 +339,18 @@ const displayController = (function displayController() {
   const render = (root) => {
     container.id = 'game-status';
     container.insertAdjacentHTML('beforeEnd', `
-      <div id ="first-status" class="player-status alert alert-info active" role="alert">${p1.getName()}</div>
-      <div id="second-status" class="player-status alert alert-info" role="alert">${p2.getName()}</div>
+      <div id ="first-status" class="player-status alert alert-info active" role="alert">
+        ${p1.getName()}
+        <span class="score">${homeView.modeAi() ? score.p1[0] : score.p1[1]}</span>
+      </div>
+      <div class="tie">
+        Ties<br>
+        <span class="ties-count">${homeView.modeAi() ? score.tieAi : score.tie}</span>
+      </div>
+      <div id="second-status" class="player-status alert alert-info" role="alert">
+        ${p2.getName()}
+        <span class="score">${homeView.modeAi() ? score.ai : score.p2}</span>
+      </div>
     `);
     root.append(container);
   };
@@ -396,10 +433,17 @@ const displayController = (function displayController() {
 
   const playersInit = () => {
     const { nameP1, nameP2 } = homeView.getNames();
+
     if (!p1 || p1.getName() !== nameP1) {
       p1 = humanPlayer();
       p1.setName('P1');
       p1.setName(nameP1);
+      // Score reset
+      score.p1 = [0, 0];
+      score.p2 = 0;
+      score.ai = 0;
+      score.tieAi = 0;
+      score.tie = 0;
     }
 
     if (homeView.modeAi()) {

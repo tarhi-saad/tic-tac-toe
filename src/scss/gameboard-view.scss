@@ -24,6 +24,27 @@
       box-shadow: 0 4px 5px rgba(0, 0, 0, 0.16);
       border-bottom-color: #a8e4ef;
     }
+
+    .score {
+      float: right;
+      color: rgba(12, 84, 96, 0.54);
+    }
+
+    .tie {
+      border-radius: 10px;
+      background: #0c5460;
+      color: #fff;
+      padding: 5px 8px;
+      text-align: center;
+      font-size: 15px;
+      letter-spacing: 1px;
+      line-height: 1;
+      margin: 0 5px 1rem 0;
+
+      .ties-count {
+        font-size: 20px;
+      }
+    }
   }
 
   .status-result {
