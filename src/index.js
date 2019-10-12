@@ -17,7 +17,7 @@
  * ! Use Sass
  * TODO: Improve UX
  * ? Score feature? This feature can wait...
- * * Save and display the score (Display the names separatly to add the scrore to each one of them)
+ * * Save and display the score (Display the names separatly to add the score to each one of them)
  * * To add the score you have to add the 'choose your mark' feature to give the players a fair play
  * * Add 'ties' count in the middle
  * * Save data using 'local storage' (score & names)
@@ -32,14 +32,21 @@
  * * Improve "Home" design (switch AI/Human)
  * ==========================================================
  * * Features:
- * - []Home - Add difficulty feature
- * - []Home design - choice switch (AI/Human)
- * - []Separate names
- * - []Add "Choose mark" feature
+ * - [X]Home - Add difficulty feature
+ * - [X]Home design - choice switch (AI/Human)
+ * - [X]Separate names
+ * - [X]Add "Score" feature (tie count also in the middle)
+ * - [X]Add "Choose mark" feature
  * - []Re-design "Marks" (colors) & "winning line"
+ * - []Sounds effect
+ * =============================================================
+ * TODO: Delete score + set score for each AI difficulty + disable case sensitive
  */
 
 import bsCustomFileInput from 'mdbootstrap/js/modules/bs-custom-file-input';
+import 'jquery';
+import 'popper.js';
+import 'bootstrap';
 import 'mdbootstrap';
 import 'mdbootstrap/css/bootstrap.min.css';
 import 'mdbootstrap/css/mdb.min.css';

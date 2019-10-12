@@ -16,8 +16,13 @@ module.exports = {
     'no-param-reassign': [2, { props: false }],
     'import/no-extraneous-dependencies': [
       'error',
-      { devDependencies: true, optionalDependencies: true, peerDependencies: false },
+      {
+        devDependencies: true,
+        optionalDependencies: true,
+        peerDependencies: false,
+      },
     ],
     'no-unused-expressions': ['error', { allowTernary: true }],
+    'no-void': 'off',
   },
 };

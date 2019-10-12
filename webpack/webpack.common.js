@@ -21,6 +21,7 @@ module.exports = {
     new webpack.ProvidePlugin({
       $: 'mdbootstrap/js/jquery-3.4.1.min',
       jQuery: 'mdbootstrap/js/jquery-3.4.1.min',
+      jquery: 'mdbootstrap/js/jquery-3.4.1.min',
       'window.$': 'mdbootstrap/js/jquery-3.4.1.min',
       'window.jQuery': 'mdbootstrap/js/jquery-3.4.1.min',
       // Waves: 'mdbootstrap/js/modules/waves',

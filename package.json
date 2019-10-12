@@ -49,6 +49,9 @@
     "webpack-merge": "^4.2.2"
   },
   "dependencies": {
-    "mdbootstrap": "^4.8.9"
+    "bootstrap": "^4.3.1",
+    "jquery": "^3.4.1",
+    "mdbootstrap": "^4.8.9",
+    "popper.js": "^1.15.0"
   }
 }
