@@ -10,6 +10,7 @@
 #win-line2 {
   stroke-dasharray: 94;
   stroke-dashoffset: 94;
+  transition: stroke-dashoffset 0.3s;
 }
 
 #win-line3 {

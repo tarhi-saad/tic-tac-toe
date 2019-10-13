@@ -31,15 +31,15 @@ const homeView = (function homeView() {
     </div>
     <div id="difficulty">
       <div class="btn-group" data-toggle="buttons">
-        <label class="btn btn-light-blue form-check-label active">
-          <input class="form-check-input" type="radio" name="options" id="Easy" autocomplete="off" checked>
+        <label class="btn btn-light-blue form-check-label">
+          <input class="form-check-input" type="radio" name="options" id="Easy" autocomplete="off">
           Easy
         </label>
         <label class="btn btn-light-blue form-check-label">
           <input class="form-check-input" type="radio" name="options" id="Normal" autocomplete="off"> Normal
         </label>
-        <label class="btn btn-light-blue form-check-label">
-          <input class="form-check-input" type="radio" name="options" id="Impossible" autocomplete="off"> Impossible
+        <label class="btn btn-light-blue form-check-label active">
+          <input class="form-check-input" type="radio" name="options" id="Impossible" autocomplete="off" checked> Impossible
         </label>
       </div>
     </div>
