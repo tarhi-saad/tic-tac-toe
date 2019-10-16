@@ -2,12 +2,14 @@ import homeView from './homeView';
 import gameBoard from './gameboard';
 import { humanPlayer, aiPlayer } from './players';
 import minimax from './minimax';
+import soundEffects from './soundEffects';
 
 const displayController = (function displayController() {
   const gameWrapper = document.createElement('div');
   const restart = document.createElement('button');
   const homeButton = document.createElement('button');
   const resetScore = document.createElement('button');
+  // const muteButton = document.createElement('button');
   const container = document.createElement('div');
   const score = {
     p1: [0, 0],
@@ -127,6 +129,7 @@ const displayController = (function displayController() {
         }
         break;
       case 'win':
+        soundEffects.playWin();
         container.innerHTML = `Congratulation to player: ${next()}`;
         container.classList.add(
           'alert-primary',
@@ -143,11 +146,29 @@ const displayController = (function displayController() {
 
         break;
       case 'tie':
+        soundEffects.playTie();
         container.innerHTML = "It's a tie!";
         container.classList.add(
           'alert-warning',
           'animated',
           'shake',
+          'status-result',
+        );
+        p1Turn = !p1Turn;
+        nextIsX = p1Turn;
+
+        if (storageAvailable('localStorage')) {
+          populateStorage();
+        }
+
+        break;
+      case 'lose':
+        soundEffects.playLose();
+        container.innerHTML = 'You lose!';
+        container.classList.add(
+          'alert-danger',
+          'animated',
+          'wobble',
           'status-result',
         );
         p1Turn = !p1Turn;
@@ -335,6 +356,7 @@ const displayController = (function displayController() {
   const aiFlow = () => {
     document.body.style.pointerEvents = 'none';
     const transitionHandler = () => {
+      soundEffects.playOMark();
       SetAIDifficulty(homeView.getDifficulty());
 
       if (gameBoard.isWinner()) {
@@ -342,7 +364,7 @@ const displayController = (function displayController() {
           .querySelector('.player-status')
           .removeEventListener('transitionend', transitionHandler);
         score.p1VsAi[homeView.getDifficulty()][2] += 1;
-        displayState('win');
+        displayState('lose');
         document.body.style.pointerEvents = '';
         return;
       }
@@ -375,6 +397,7 @@ const displayController = (function displayController() {
     gameBoard.getHTMLBoard().style.pointerEvents = 'none';
 
     const transitionLineHandler = () => {
+      soundEffects.playOMark();
       const AiMove = Math.floor(Math.random() * 9);
       gameBoard.add(AiMove, 'O');
       history.push([].concat(gameBoard.get()));
@@ -474,6 +497,7 @@ const displayController = (function displayController() {
   };
 
   const reset = () => {
+    soundEffects.playBoard();
     gameBoard.reset();
     displayState('first');
     nextIsX = p1Turn;
@@ -487,6 +511,7 @@ const displayController = (function displayController() {
     gameWrapper.id = 'game-wrapper';
     root.append(gameWrapper);
     render(gameWrapper);
+    soundEffects.playBoard();
     gameBoard.render(gameWrapper);
 
     homeButton.id = 'home-button';
@@ -497,6 +522,9 @@ const displayController = (function displayController() {
       'waves-effect',
       'waves-light',
     );
+    // muteButton.insertAdjacentHTML('beforeend', '<i class="fas fa-volume-up"></i>');
+    // muteButton.id = 'mute-button-game';
+    // muteButton.classList.add('btn', 'btn-primary', 'waves-effect', 'waves-light', 'mute-button');
     restart.id = 'restart';
     restart.innerHTML = 'Restart';
     restart.classList.add(
@@ -518,7 +546,7 @@ const displayController = (function displayController() {
     );
     resetScore.dataset.toggle = 'modal';
     resetScore.dataset.target = '#modalConfirmResetScore';
-    gameWrapper.append(homeButton, restart, resetScore);
+    gameWrapper.append(homeButton, restart, resetScore, homeView.getMuteButton());
     root.insertAdjacentHTML(
       'beforeend',
       `
@@ -543,7 +571,7 @@ const displayController = (function displayController() {
             <!--Footer-->
             <div class="modal-footer flex-center">
               <a href="#" id="confirmResetScoresBtn" class="btn  btn-outline-danger" data-dismiss="modal">Ok</a>
-              <a type="button" class="btn  btn-danger waves-effect" data-dismiss="modal">Cancel</a>
+              <a type="button" id="cancelResetScoreBtn" class="btn  btn-danger waves-effect" data-dismiss="modal">Cancel</a>
             </div>
           </div>
           <!--/.Content-->
@@ -553,7 +581,28 @@ const displayController = (function displayController() {
       `,
     );
 
-    const handleClick = (e) => (nextIsX ? gameFlow(e, restart, p1) : gameFlow(e, restart, p2));
+    // const handleClick = (e) => (nextIsX ? gameFlow(e, restart, p1) : gameFlow(e, restart, p2));
+    const handleClick = (e) => {
+      const square = e.target.closest('.square');
+
+      if (nextIsX) {
+        if (
+          square
+          && !gameBoard.get()[square.dataset.index]
+          && !gameBoard.isWinner()
+        ) soundEffects.playXMark();
+
+        gameFlow(e, restart, p1);
+      } else {
+        if (
+          square
+          && !gameBoard.get()[square.dataset.index]
+          && !gameBoard.isWinner()
+        ) soundEffects.playOMark();
+
+        gameFlow(e, restart, p2);
+      }
+    };
 
     gameBoard.getHTMLBoard().addEventListener('click', handleClick);
 
@@ -562,6 +611,7 @@ const displayController = (function displayController() {
     });
 
     homeButton.addEventListener('click', () => {
+      soundEffects.playSwipe();
       gameWrapper.classList.remove('slide-in-right');
       gameWrapper.classList.add('slide-out-right');
 
@@ -579,6 +629,7 @@ const displayController = (function displayController() {
       gameStatus.classList.remove('jello-horizontal');
       void gameStatus.offsetWidth;
       gameStatus.classList.add('jello-horizontal');
+      soundEffects.playBubble();
       const AIStorage = localStorage.getItem(p1.getName().toLowerCase());
 
       if (homeView.modeAi() && AIStorage) {
@@ -606,11 +657,17 @@ const displayController = (function displayController() {
       .querySelector('#confirmResetScoresBtn')
       .addEventListener('click', handleResetScoreClick);
 
+    const handleCancelResetScoreClick = () => soundEffects.playMenu();
+    root
+      .querySelector('#cancelResetScoreBtn')
+      .addEventListener('click', handleCancelResetScoreClick);
+
     const handleStatusClick = (e) => {
       const player = e.target.closest('.player-status');
       gameBoard.getHTMLBoard().style.pointerEvents = '';
 
       if (player) {
+        soundEffects.playBoard();
         gameBoard.reset();
 
         if (player.id === 'first-status') {
@@ -628,12 +685,16 @@ const displayController = (function displayController() {
     document
       .getElementById('game-status')
       .addEventListener('click', handleStatusClick);
+
+    const handleScoreButtonClick = () => soundEffects.playMenu();
+    resetScore.addEventListener('click', handleScoreButtonClick);
   };
 
   const attachGame = (root) => {
     homeView.remove();
     p1Turn = true;
     root.append(gameWrapper);
+    gameWrapper.append(homeView.getMuteButton());
     reset();
     restart.style.display = '';
   };
@@ -705,8 +766,10 @@ const displayController = (function displayController() {
 
   const init = (root) => {
     homeView.render(root);
+    soundEffects.init();
 
     homeView.playButton().addEventListener('click', (e) => {
+      soundEffects.playSwipe();
       e.preventDefault();
       homeView.getForm().classList.remove('slide-in-left');
       homeView.getForm().classList.add('slide-out-left');
@@ -731,6 +794,24 @@ const displayController = (function displayController() {
 
       homeView.getForm().addEventListener('animationend', animationHandler);
     });
+
+    const handleMuteClick = (e) => {
+      const muteBtn = e.target.closest('.mute-button');
+      const muteIcon = muteBtn.querySelector('i');
+      muteIcon.classList.toggle('fa-volume-mute');
+      muteIcon.classList.toggle('fa-volume-up');
+      if (muteIcon.classList.contains('fa-volume-up')) {
+        document.querySelectorAll('audio').forEach((audio) => {
+          audio.muted = false;
+        });
+        soundEffects.playMenu();
+      } else {
+        document.querySelectorAll('audio').forEach((audio) => {
+          audio.muted = true;
+        });
+      }
+    };
+    document.querySelector('.mute-button').addEventListener('click', handleMuteClick);
   };
 
   return {

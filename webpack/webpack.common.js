@@ -75,6 +75,12 @@ module.exports = {
         ],
       },
       {
+        test: /\.mp3$/,
+        use: [
+          'file-loader',
+        ],
+      },
+      {
         test: /\.js$/,
         exclude: /node_modules/,
         use: {

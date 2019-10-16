@@ -1,6 +1,12 @@
+import soundEffects from './soundEffects';
+
 const homeView = (function homeView() {
   const homeWrapper = document.createElement('div');
   const form = document.createElement('form');
+  const muteButton = document.createElement('button');
+  muteButton.insertAdjacentHTML('beforeend', '<i class="fas fa-volume-up"></i>');
+  muteButton.id = 'mute-button';
+  muteButton.classList.add('btn', 'btn-primary', 'waves-effect', 'waves-light', 'mute-button');
   const blockInput2 = document.createElement('div');
   blockInput2.id = 'block-p2';
   blockInput2.classList.add('md-form');
@@ -67,13 +73,14 @@ const homeView = (function homeView() {
     gameTitle.innerHTML = 'Tic Tac Toe';
     form.id = 'game-form';
     form.insertAdjacentHTML('beforeEnd', HTMLForm);
-    homeWrapper.append(gameTitle, form);
+    homeWrapper.append(gameTitle, form, muteButton);
     root.append(homeWrapper);
 
     const { players } = form.elements;
     const difficulty = document.querySelector('#difficulty');
 
     const handleChange = () => {
+      soundEffects.playMenu();
       players.disabled = true;
       if (modeAi()) {
         blockInput2.classList.remove('slide-in-left');
@@ -118,11 +125,14 @@ const homeView = (function homeView() {
     players.addEventListener('change', handleChange);
 
     const handleClick = (e) => {
-      const labels = difficulty.querySelectorAll('label');
-      Array.from(labels).forEach((label) => (
-        e.target.closest('label') === label ? label.classList.add('active')
-          : label.classList.remove('active')
-      ));
+      if (e.target.closest('label')) {
+        soundEffects.playMenu();
+        const labels = difficulty.querySelectorAll('label');
+        Array.from(labels).forEach((label) => (
+          e.target.closest('label') === label ? label.classList.add('active')
+            : label.classList.remove('active')
+        ));
+      }
     };
     difficulty.addEventListener('click', handleClick);
   };
@@ -131,7 +141,10 @@ const homeView = (function homeView() {
 
   const getForm = () => homeWrapper;
 
-  const attach = (root) => root.append(homeWrapper);
+  const attach = (root) => {
+    homeWrapper.append(muteButton);
+    root.append(homeWrapper);
+  };
 
   const getNames = () => {
     if (modeAi()) {
@@ -147,6 +160,8 @@ const homeView = (function homeView() {
     };
   };
 
+  const getMuteButton = () => muteButton;
+
   return {
     render,
     playButton,
@@ -156,6 +171,7 @@ const homeView = (function homeView() {
     getForm,
     modeAi,
     getDifficulty,
+    getMuteButton,
   };
 }());
 

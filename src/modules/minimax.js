@@ -90,6 +90,12 @@ const minimax = (() => {
   /**
    * The minimax algorithm. Provides an optimal move for the player.
    * @param {string[] | null[]} state A state of the game
+   * @param {number} depth depth of the recursive function
+   * @param {number} alpha The best (highest-value) choice we have found so far at any point along
+   * the path of Maximizer. The initial value of alpha is -∞
+   * @param {number} beta The best (lowest-value) choice we have found so far at any point along the
+   * path of Minimizer. The initial value of beta is +∞
+   * @param {string} maximizingPlayer The Max player
    * @returns {utility} Returns the highest utility at a given state
    */
   const minimaxAlgorithm = (
