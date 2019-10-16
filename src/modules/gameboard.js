@@ -67,27 +67,35 @@ const gameBoard = (function gameBoard() {
   const drawWinLine = (combination) => {
     switch (`${combination}`) {
       case '0,1,2':
+        document.getElementById('win-line1').style.opacity = 1;
         document.getElementById('win-line1').style.strokeDashoffset = 0;
         break;
       case '3,4,5':
+        document.getElementById('win-line2').style.opacity = 1;
         document.getElementById('win-line2').style.strokeDashoffset = 0;
         break;
       case '6,7,8':
+        document.getElementById('win-line3').style.opacity = 1;
         document.getElementById('win-line3').style.strokeDashoffset = 0;
         break;
       case '0,4,8':
+        document.getElementById('win-line4').style.opacity = 1;
         document.getElementById('win-line4').style.strokeDashoffset = 0;
         break;
       case '2,4,6':
+        document.getElementById('win-line5').style.opacity = 1;
         document.getElementById('win-line5').style.strokeDashoffset = 0;
         break;
       case '0,3,6':
+        document.getElementById('win-line6').style.opacity = 1;
         document.getElementById('win-line6').style.strokeDashoffset = 0;
         break;
       case '1,4,7':
+        document.getElementById('win-line7').style.opacity = 1;
         document.getElementById('win-line7').style.strokeDashoffset = 0;
         break;
       case '2,5,8':
+        document.getElementById('win-line8').style.opacity = 1;
         document.getElementById('win-line8').style.strokeDashoffset = 0;
         break;
       default:
