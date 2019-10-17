@@ -380,7 +380,15 @@ const displayController = (function displayController() {
       container
         .querySelector('.player-status')
         .removeEventListener('transitionend', transitionHandler);
-      document.body.style.pointerEvents = '';
+
+      // This Event inside another event is used to fix a bug in Firefox
+      const transitionMarkHandler = () => {
+        document.body.style.pointerEvents = '';
+        document.querySelector(`#board li:nth-child(${gameBoard.getLastIndex() + 1}) .path-o-mark`)
+          .removeEventListener('transitionend', transitionMarkHandler);
+      };
+      document.querySelector(`#board li:nth-child(${gameBoard.getLastIndex() + 1}) .path-o-mark`)
+        .addEventListener('transitionend', transitionMarkHandler);
     };
 
     container

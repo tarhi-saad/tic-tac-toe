@@ -6,8 +6,10 @@ const gameBoard = (function gameBoard() {
   const gameboard = Array(9).fill(null);
   const board = document.createElement('ul');
   const boardWrapper = document.createElement('div');
+  let lastIndex = null;
 
   const add = (index, value) => {
+    lastIndex = index;
     gameboard[index] = value;
     const li = board.querySelectorAll('li')[index];
 
@@ -136,6 +138,8 @@ const gameBoard = (function gameBoard() {
 
   const getHTMLBoard = () => board;
 
+  const getLastIndex = () => lastIndex;
+
   return {
     add,
     render,
@@ -143,6 +147,7 @@ const gameBoard = (function gameBoard() {
     isWinner,
     get,
     getHTMLBoard,
+    getLastIndex,
   };
 }());
 
