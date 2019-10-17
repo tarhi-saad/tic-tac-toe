@@ -12,11 +12,6 @@ const displayController = (function displayController() {
   // const muteButton = document.createElement('button');
   const container = document.createElement('div');
   const score = {
-    p1: [0, 0],
-    p2: 0,
-    ai: 0,
-    tie: 0,
-    tieAi: 0,
     p1VsP2: [0, 0, 0],
     p1VsAi: {
       Easy: [0, 0, 0],
@@ -632,17 +627,20 @@ const displayController = (function displayController() {
       soundEffects.playBubble();
       const AIStorage = localStorage.getItem(p1.getName().toLowerCase());
 
-      if (homeView.modeAi() && AIStorage) {
+      if (homeView.modeAi()) {
         const scoreAi = score.p1VsAi[homeView.getDifficulty()];
         [scoreAi[0], scoreAi[1], scoreAi[2]] = [0, 0, 0];
-        localStorage.setItem(
-          p1.getName().toLowerCase(),
-          `${score.p1VsAi.Easy[0]}%${score.p1VsAi.Easy[1]}%${score.p1VsAi.Easy[2]}%${
-            score.p1VsAi.Normal[0]
-          }%${score.p1VsAi.Normal[1]}%${score.p1VsAi.Normal[2]}%${score.p1VsAi.Impossible[0]}%${
-            score.p1VsAi.Impossible[1]
-          }%${score.p1VsAi.Impossible[2]}`,
-        );
+
+        if (AIStorage) {
+          localStorage.setItem(
+            p1.getName().toLowerCase(),
+            `${score.p1VsAi.Easy[0]}%${score.p1VsAi.Easy[1]}%${score.p1VsAi.Easy[2]}%${
+              score.p1VsAi.Normal[0]
+            }%${score.p1VsAi.Normal[1]}%${score.p1VsAi.Normal[2]}%${score.p1VsAi.Impossible[0]}%${
+              score.p1VsAi.Impossible[1]
+            }%${score.p1VsAi.Impossible[2]}`,
+          );
+        }
       } else {
         localStorage.removeItem(`${p1.getName()}%${p2.getName()}`);
         [score.p1VsP2[0], score.p1VsP2[1], score.p1VsP2[2]] = [0, 0, 0];
