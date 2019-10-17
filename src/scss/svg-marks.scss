@@ -1,0 +1,51 @@
+/**
+* SVG animation
+*/
+.svg-x-mark {
+  width: 70px;
+  height: auto;
+  position: absolute;
+  opacity: 0;
+}
+
+.path-x-1 {
+  stroke: #fff;
+  stroke-dasharray: 73;
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 0.15s;
+}
+
+.svg-x-mark:hover .path-x-1 {
+  stroke-dashoffset: 73;
+}
+
+.path-x-2 {
+  stroke: #fff;
+  stroke-dasharray: 67;
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 0.15s 0.15s;
+}
+
+.svg-x-mark:hover .path-x-2 {
+  /* stroke-dashoffset: 67; */
+}
+
+/* O mark */
+.svg-o-mark {
+  width: 70px;
+  height: auto;
+  position: absolute;
+  opacity: 0;
+}
+
+.path-o-mark {
+  stroke: #fff;
+  stroke-dasharray: 173;
+  stroke-dashoffset: 0;
+  /* stroke-linecap: round; */
+  transition: stroke-dashoffset 0.3s;
+}
+
+.svg-o-mark:hover .path-o-mark {
+  /* stroke-dashoffset: 173; */
+}

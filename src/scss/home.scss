@@ -1,0 +1,153 @@
+#home-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 55px;
+  position: relative;
+
+  h1 {
+    margin-bottom: 30px;
+    font-size: 3.5rem;
+  }
+
+  #game-form {
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .players-block {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+
+      .players-label {
+        margin-right: 5px;
+        font-size: 0.9em;
+      }
+    }
+
+    #players-option {
+      width: 111px;
+      height: 54px;
+      user-select: none;
+      padding: 0;
+
+      label {
+        color: #212529;
+        cursor: pointer;
+        font-family: 'Font Awesome 5 Free';
+        font-weight: 900;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        margin: 0;
+        z-index: 2;
+
+        &::before {
+          content: '';
+          left: 0;
+          background: linear-gradient(40deg, #ffd86f, #fc6262);
+        }
+
+        &::after {
+          content: '\f007';
+          right: 0;
+          color: #4e4e4e;
+        }
+
+        i {
+          display: inline-block;
+          left: 0;
+          color: #fff;
+          z-index: 1;
+        }
+
+        &::before,
+        &::after,
+        i {
+          position: absolute;
+          top: 0;
+          width: 44px;
+          height: 28px;
+          font-size: 24px;
+          font-weight: bold;
+          text-align: center;
+          line-height: 1;
+          padding: 13px 6px;
+          border-radius: 2px;
+          transition: 0.3s ease all;
+          box-sizing: unset;
+        }
+      }
+
+      input:checked ~ label::before {
+        left: 54px;
+        background: linear-gradient(40deg, #45cafc, #303f9f);
+      }
+
+      input:checked ~ label::after {
+        color: #fff;
+      }
+
+      input:checked ~ label i {
+        color: #4e4e4e;
+      }
+
+      .layer {
+        width: 100%;
+        background-color: #e1ecfd;
+        background: linear-gradient(40deg, #ffd86f40, #fc626240);
+        transition: 0.3s ease all;
+        z-index: 1;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+      }
+
+      input:checked ~ .layer {
+        background-color: #fff0e2;
+        background: linear-gradient(40deg, #45cafc40, #303f9f40);
+      }
+    }
+
+    .md-form {
+      .prefix {
+        top: 0.25rem;
+      }
+
+      label {
+        color: #7575758a;
+      }
+    }
+
+    #difficulty {
+      margin: 1.22rem 0;
+    }
+
+    #difficulty [type='radio']:checked,
+    #difficulty [type='radio']:not(:checked) {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    button#play {
+      font-size: 1.5rem;
+      margin-top: 40px;
+
+      i {
+        position: relative;
+        top: 2px;
+        left: 4px;
+        margin-right: 4px;
+      }
+    }
+  }
+}
