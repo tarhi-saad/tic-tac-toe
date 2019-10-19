@@ -29,7 +29,7 @@ module.exports = {
   ],
   output: {
     filename: 'main.js',
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, '../docs'),
   },
   module: {
     rules: [
@@ -61,7 +61,7 @@ module.exports = {
         loader: 'file-loader',
         options: {
           name: '[name].[contenthash].[ext]',
-          outputPath: 'assets',
+          outputPath: 'assets/images',
         },
       },
       {
@@ -70,15 +70,17 @@ module.exports = {
       },
       {
         test: /\.(woff|woff2|eot|ttf|otf)$/,
-        use: [
-          'file-loader',
-        ],
+        loader: 'file-loader',
+        options: {
+          outputPath: 'assets/fonts',
+        },
       },
       {
         test: /\.mp3$/,
-        use: [
-          'file-loader',
-        ],
+        loader: 'file-loader',
+        options: {
+          outputPath: 'assets/audio',
+        },
       },
       {
         test: /\.js$/,
