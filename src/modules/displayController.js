@@ -88,7 +88,7 @@ const displayController = (function displayController() {
           'beforeEnd',
           `
           <div id ="first-status" class="player-status alert alert-info" role="alert">
-            ${p1.getName()}
+            ${p1.getName().length > 13 ? `${p1.getName().slice(0, 10)}...` : p1.getName()}
             <span class="score scores">
               ${homeView.modeAi() ? score.p1VsAi[homeView.getDifficulty()][0] : score.p1VsP2[0]}
             </span>
@@ -100,7 +100,7 @@ const displayController = (function displayController() {
             </span>
           </div>
           <div id="second-status" class="player-status alert alert-info" role="alert">
-            ${p2.getName()}
+            ${p2.getName().length > 13 ? `${p2.getName().slice(0, 10)}...` : p2.getName()}
             <span class="score scores">
               ${homeView.modeAi() ? score.p1VsAi[homeView.getDifficulty()][2] : score.p1VsP2[2]}
             </span>
@@ -477,7 +477,7 @@ const displayController = (function displayController() {
       'beforeEnd',
       `
       <div id ="first-status" class="player-status alert alert-info active" role="alert">
-        ${p1.getName()}
+        ${p1.getName().length > 13 ? `${p1.getName().slice(0, 10)}...` : p1.getName()}
         <span class="score scores">
           ${homeView.modeAi() ? score.p1VsAi[homeView.getDifficulty()][0] : score.p1VsP2[0]}
         </span>
@@ -489,7 +489,7 @@ const displayController = (function displayController() {
         </span>
       </div>
       <div id="second-status" class="player-status alert alert-info" role="alert">
-        ${p2.getName()}
+      ${p2.getName().length > 13 ? `${p2.getName().slice(0, 10)}...` : p2.getName()}
         <span class="score scores">
           ${homeView.modeAi() ? score.p1VsAi[homeView.getDifficulty()][2] : score.p1VsP2[2]}
         </span>

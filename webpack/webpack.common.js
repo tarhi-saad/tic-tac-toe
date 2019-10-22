@@ -49,6 +49,12 @@ module.exports = {
             },
           },
           {
+            loader: 'postcss-loader',
+            options: {
+              sourceMap: true,
+            },
+          },
+          {
             loader: 'sass-loader',
             options: {
               sourceMap: true,
@@ -88,7 +94,7 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-env'],
+            presets: [['@babel/preset-env', { useBuiltIns: 'usage', corejs: '3.3.2' }]],
           },
         },
       },
