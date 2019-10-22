@@ -10,7 +10,7 @@
   justify-content: center;
   background: #fff;
   max-width: 800px;
-  margin: 0 auto;
+  margin: 0;
   padding: 75px 0 20px;
   position: relative;
   height: 610px;
@@ -18,26 +18,40 @@
 
   .mute-button {
     position: absolute;
-    bottom: -55px;
-    left: 20px;
+    bottom: -70px;
+    left: 5px;
     margin: 0;
     border-radius: 50%;
     padding: 0;
-    width: 61.1px;
-    height: 61.1px;
+    width: 45.1px;
+    height: 45.1px;
     box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18),
       0 4px 15px 0 rgba(0, 0, 0, 0.15);
 
+    @media only screen and (min-width: 580px) {
+      bottom: -55px;
+      left: 20px;
+      width: 61.1px;
+      height: 61.1px;
+    }
+
     i {
-      font-size: 1.625rem;
-      line-height: 61.1px;
+      font-size: 1.2rem;
+      line-height: 45.1px;
+
+      @media only screen and (min-width: 580px) {
+        font-size: 1.625rem;
+        line-height: 61.1px;
+      }
     }
   }
-}
 
-@media (max-width: 840px) {
-  #root {
+  @media only screen and (min-width: 580px) {
     margin: 40px 20px 0;
+  }
+
+  @media only screen and (min-width: 840px) {
+    margin: 0 auto;
   }
 }
 
@@ -52,6 +66,7 @@
 #root:before,
 #root:after {
   content: '';
+  display: none;
   position: absolute;
   left: 0;
   top: 0;
@@ -59,6 +74,10 @@
   height: 100%;
   transform: rotateZ(2.5deg);
   z-index: -1;
+
+  @media only screen and (min-width: 580px) {
+    display: block;
+  }
 }
 
 #root:after {

@@ -1,6 +1,7 @@
 @font-face {
   font-family: 'LuckiestGuy';
-  src: url('../fonts/LuckiestGuy-Regular.ttf') format('woff2');
+  src: url('../fonts/LuckiestGuy-Regular.ttf') format('woff2'),
+    url('../fonts/LuckiestGuy-Regular.woff') format('woff');
   font-style: normal;
 }
 
@@ -9,5 +10,9 @@ body {
   background-attachment: fixed;
   background-repeat: no-repeat;
   font-family: LuckiestGuy, Roboto, sans-serif;
-  font-size: 24px;
+  font-size: 16px;
+
+  @media only screen and (min-width: 580px) {
+    font-size: 24px;
+  }
 }

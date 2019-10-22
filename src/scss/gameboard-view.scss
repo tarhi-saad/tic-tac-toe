@@ -15,10 +15,14 @@
       min-width: 150px;
       border-radius: 0 0 10px 10px;
       box-shadow: 0 1px 1px rgba(0, 0, 0, 0.16);
-      padding: 0.1rem 1.25rem;
+      padding: 0.1rem 0.25rem;
       border-bottom: 2px solid transparent;
       cursor: pointer;
       transition: all 0.3s 0.3s;
+
+      @media only screen and (min-width: 580px) {
+        padding: 0.1rem 1.25rem;
+      }
     }
 
     .active {
@@ -38,13 +42,21 @@
       color: #fff;
       padding: 5px 8px;
       text-align: center;
-      font-size: 15px;
+      font-size: 12px;
       letter-spacing: 1px;
       line-height: 1;
       margin-right: 5px;
 
+      @media only screen and (min-width: 580px) {
+        font-size: 15px;
+      }
+
       .ties-count {
-        font-size: 20px;
+        font-size: 15px;
+
+        @media only screen and (min-width: 580px) {
+          font-size: 20px;
+        }
       }
     }
   }
@@ -87,13 +99,13 @@
 
   #home-button {
     position: absolute;
-    top: -65px;
-    left: 20px;
+    top: -70px;
+    left: 5px;
     margin: 0;
     border-radius: 50%;
     padding: 0;
-    width: 61.1px;
-    height: 61.1px;
+    width: 45.1px;
+    height: 45.1px;
     box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18),
       0 4px 15px 0 rgba(0, 0, 0, 0.15);
 
@@ -102,21 +114,33 @@
         0 6px 20px 0 rgba(0, 0, 0, 0.19);
     }
 
+    @media only screen and (min-width: 580px) {
+      top: -65px;
+      left: 20px;
+      width: 61.1px;
+      height: 61.1px;
+    }
+
     i {
-      font-size: 1.625rem;
-      line-height: 61.1px;
+      font-size: 1.2rem;
+      line-height: 45.1px;
+
+      @media only screen and (min-width: 580px) {
+        font-size: 1.625rem;
+        line-height: 61.1px;
+      }
     }
   }
 
   #reset-score {
     position: absolute;
-    bottom: 0;
-    right: 20px;
+    bottom: -14px;
+    right: 5px;
     margin: 0;
     border-radius: 50%;
     padding: 0;
-    width: 61.1px;
-    height: 61.1px;
+    width: 45.1px;
+    height: 45.1px;
     box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18),
       0 4px 15px 0 rgba(0, 0, 0, 0.15);
 
@@ -125,9 +149,21 @@
         0 6px 20px 0 rgba(0, 0, 0, 0.19);
     }
 
+    @media only screen and (min-width: 580px) {
+      bottom: 0;
+      right: 20px;
+      width: 61.1px;
+      height: 61.1px;
+    }
+
     i {
-      font-size: 1.625rem;
-      line-height: 61.1px;
+      font-size: 1.2rem;
+      line-height: 45.1px;
+
+      @media only screen and (min-width: 580px) {
+        font-size: 1.625rem;
+        line-height: 61.1px;
+      }
     }
   }
 
@@ -139,7 +175,11 @@
   }
 
   .mute-button {
-    bottom: 0;
+    bottom: -14px;
+
+    @media only screen and (min-width: 580px) {
+      bottom: 0;
+    }
   }
 }
 

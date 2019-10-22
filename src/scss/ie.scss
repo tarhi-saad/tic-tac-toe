@@ -1,0 +1,8 @@
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  #home-wrapper #game-form #players-option label::after,
+  #home-wrapper #game-form #players-option label::before,
+  #home-wrapper #game-form #players-option label i {
+    width: 57px;
+    height: 54px;
+  }
+}

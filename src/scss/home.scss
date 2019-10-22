@@ -129,6 +129,14 @@
 
     #difficulty {
       margin: 1.22rem 0;
+
+      label.btn {
+        padding: 0.84rem 1.14rem;
+
+        @media only screen and (min-width: 580px) {
+          padding: 0.84rem 2.14rem;
+        }
+      }
     }
 
     #difficulty [type='radio']:checked,
