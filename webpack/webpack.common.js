@@ -29,6 +29,7 @@ module.exports = {
   ],
   output: {
     filename: 'main.js',
+    chunkFilename: 'vendors/[name].bundle.js',
     path: path.resolve(__dirname, '../docs'),
   },
   module: {

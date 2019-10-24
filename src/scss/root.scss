@@ -1,8 +1,12 @@
 .wrapper {
-  height: 100vh;
+  height: auto;
   display: flex;
   width: 100%;
   align-items: center;
+
+  @media only screen and (min-height: 650px) {
+    height: 100vh;
+  }
 }
 
 #root {
