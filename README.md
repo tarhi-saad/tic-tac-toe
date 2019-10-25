@@ -1,11 +1,3 @@
-**Home page**
-
-# ![Tic Tac Toe](images/screenshot2.png)
-
-**Game page**
-
-# ![Tic Tac Toe](images/screenshot.png)
-
 # Tic Tac Toe
 
 A plain JS project. Using the [factory pattern](https://addyosmani.com/resources/essentialjsdesignpatterns/book/#factorypatternjavascript) and the [module pattern](https://addyosmani.com/resources/essentialjsdesignpatterns/book/#modulepatternjavascript) to organize the code.
@@ -13,6 +5,10 @@ A plain JS project. Using the [factory pattern](https://addyosmani.com/resources
 This is a complete and an awesome **_Tic Tac Toe_** game, fully optimized for _desktop_ and _mobile_, with a great design and all the necessary features you could think of (check [Features](#features) for more details).
 
 **_Artificial Intelligence_**: To create the **_AI_** for this game I used the [Alpha-Beta Pruning](https://www.javatpoint.com/ai-alpha-beta-pruning) algorithm, which is an optimization technique for the [Mini-Max](https://www.javatpoint.com/mini-max-algorithm-in-ai) algorithm, a recursive or backtracking algorithm which is used in decision-making and game theory.
+
+> **Home page**
+
+# ![Tic Tac Toe](images/screenshot2.png)
 
 ## Table of contents
 
@@ -48,6 +44,10 @@ Here is the working live demo:
 - Material design
 - A cartoon game style design
 - Cool CSS animations & SVG animations (board game, 'X' & 'O' marks)
+
+> **_Game page_**
+
+# ![Tic Tac Toe](images/screenshot.png)
 
 ## Development
 
