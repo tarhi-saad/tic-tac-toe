@@ -57,4 +57,4 @@ To set up this App locally, clone this repo to your desktop and run `npm install
 
 > You can check out the full license [here](LICENSE)
 
-This project is licensed under the terms of the **MIT** license.
+This project is licensed under the terms of the **GNU GPLv3** license.
